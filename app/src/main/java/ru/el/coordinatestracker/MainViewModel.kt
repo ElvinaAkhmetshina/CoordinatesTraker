@@ -1,18 +1,30 @@
 package ru.el.coordinatestracker
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.el.coordinatestracker.model.Track
+import ru.el.coordinatestracker.db.TracksDatabase
+import ru.el.coordinatestracker.db.model.Track
+import ru.el.coordinatestracker.utils.TYPE_ROOM
 import java.lang.IllegalArgumentException
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     val context = application
+
+    /*
+
+
+
+
+
+
 
     fun initDatabase(type: String, onSuccess: () -> Unit)
     {
@@ -20,15 +32,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         Log.d("checkData", "MainViewModel initDatabase with type: $type")
         when(type)
         {
-            /*
-            TYPE_ROOM->{val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
+
+            TYPE_ROOM->{val dao = TracksDatabase.getInstance(context = context).getTrackDao()
                 REPOSITORY = RoomRepository(dao)
-                onSuccess()}*/
+                onSuccess()}
 
         }
     }
+    */
 
 
+    /*
     fun addNote(note: Track, onSuccess: () -> Unit)
     {
         viewModelScope.launch(Dispatchers.IO){
@@ -71,10 +85,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }*/
         }
-    }
+    }*/
 
     //fun readAllNotes() = REPOSITORY.readAll
     //////comment
+
+
+
+
+    private lateinit var applicationContext: Context
+
+    fun init(context: Context) {
+        applicationContext = context
+    }
+
+    private val appDatabase: TracksDatabase by lazy {
+        Room.databaseBuilder(applicationContext, TracksDatabase::class.java, "database.db")
+            .createFromAsset("room_article.db")
+            .build()
+    }
+/*
+    fun insertNewDataInDatabase(mistakes: Long, points: Long) {
+        viewModelScope.launch {
+            val newStatistic = Statistic(currentResult, currentDifficultyLevel, mistakes, points)
+            statisticRepository.insertNewStatisticData(newStatistic.toStatisticDbEntity())
+        }
+    }*/
 }
 
 class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory

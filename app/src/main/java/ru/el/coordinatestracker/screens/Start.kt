@@ -51,6 +51,26 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         )
         {
             Text(
+                text = "Просмотреть сохраненные треки",
+                fontFamily = FontFamily.Cursive,
+                fontStyle = FontStyle.Italic,
+                fontWeight = FontWeight.Bold,
+                fontSize = 32.sp
+            )
+        }
+        Button(
+            onClick = {
+                viewModel.initDatabase(TYPE_ROOM) {
+                    navController.navigate(route = NavigationPath.List.route)
+                }
+            },
+            modifier = Modifier
+                .width(250.dp)
+                .height(100.dp)
+                .padding(vertical = 8.dp)
+        )
+        {
+            Text(
                 text = START,
                 fontFamily = FontFamily.Cursive,
                 fontStyle = FontStyle.Italic,

@@ -28,7 +28,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.MainViewModelFactory
-import ru.el.coordinatestracker.model.Track
+import ru.el.coordinatestracker.db.model.Track
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 import ru.el.coordinatestracker.utils.Constants
@@ -86,18 +86,18 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
         Button(
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabled,
-            onClick = {
+            onClick = {/*
                 viewModel.addNote(
                     note = Track(
-                        /*
+
                         title = title,
                         subtitle = subtitle,
                         date = System.currentTimeMillis()/1000,
-                        priority = priority.toInt()*/
+                        priority = priority.toInt()
                     )
                 ) {
                     navController.navigate(NavigationPath.List.route)
-                }
+                }*/
             }
         )
         {

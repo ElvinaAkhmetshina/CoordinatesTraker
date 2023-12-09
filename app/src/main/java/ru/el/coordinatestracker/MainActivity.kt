@@ -21,6 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.el.coordinatestracker.navigation.TracksNavigationHost
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoordinatesTrackerTheme{
                 val context = LocalContext.current
-                //val mViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+                val mViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
 
                 Scaffold(
                     topBar = {
@@ -51,21 +53,13 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
-                            //NotesNavHost(mViewModel)
+                            TracksNavigationHost(mViewModel)
                         }
                     }
                 )
 
 
-            } /*{
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }*/
+            }
         }
     }
 }

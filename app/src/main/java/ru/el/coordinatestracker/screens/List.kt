@@ -28,7 +28,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.MainViewModelFactory
-import ru.el.coordinatestracker.model.Track
+import ru.el.coordinatestracker.db.model.Track
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 import java.time.Instant
@@ -57,6 +57,12 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
 
     Column(Modifier.selectableGroup())
     {
+        Text(
+            //text = track.title,
+            text = "экран с треками",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold
+        )
 
         /*Row {
             RadioButton(
@@ -73,13 +79,14 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
                 modifier = Modifier.padding(8.dp)
             )
             Text("Сортировка по важности", fontSize = 20.sp)
-        }*/
+        }
         LazyColumn {
+
             /*
             items(tracks) { track ->
                 TrackItem(track = track, navController = navController)
             }*/
-        }
+        }*/
     }
     //BottomAppBar {
     FloatingActionButton(
@@ -148,7 +155,7 @@ fun TrackItem(track: Track, navController: NavHostController) {
 
 @Preview(showBackground = true)
 @Composable
-fun prevMainScreen() {
+fun prevListScreen() {
     CoordinatesTrackerTheme {
 
         val context = LocalContext.current
