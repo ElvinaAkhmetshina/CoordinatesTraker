@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
+/*@Entity(
     tableName = "all_tracks",
     indices = [Index("id")],
     foreignKeys = [
@@ -27,4 +27,4 @@ data class TrackDBEntity (
     val distance: Long,
     @ColumnInfo(name = "track_detail_id")
     val trackDetailID: Int
-)
+)*/

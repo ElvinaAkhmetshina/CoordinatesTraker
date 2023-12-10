@@ -5,15 +5,21 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 /*
-@Entity(tableName = "all_tracks")
-data class Track (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int =0,
-    @ColumnInfo
+data class Track(
     val date: Long,
-    @ColumnInfo
-    val distance: Long
-)
+    val distance: Long,
+    val trackDetailID: Int
+) {
+
+    fun toTrackDbEntity(): TrackDBEntity = TrackDBEntity(
+        id = 0,
+        date = date,
+        distance = distance,
+        trackDetailID = trackDetailID
+    )
+}
+
+
 @Entity(
     tableName = "all_tracks",
     indices = [Index("id")],
@@ -36,18 +42,21 @@ data class Track (
     @ColumnInfo(name = "track_detail_id")
     val trackDetailID: Int
 )
+
+
+
+
+@Entity(tableName = "all_tracks")
+data class Track (
+    @PrimaryKey(autoGenerate = true)
+    val id: Int =0,
+    @ColumnInfo
+    val date: Long,
+    @ColumnInfo
+    val distance: Long,
+    //@ColumnInfo(name = "trackDetail")
+    val trackDetail: Int,
+)
+
 */
 
-data class Track(
-    val date: Long,
-    val distance: Long,
-    val trackDetailID: Int
-) {
-
-    fun toTrackDbEntity(): TrackDBEntity = TrackDBEntity(
-        id = 0,
-        date = date,
-        distance = distance,
-        trackDetailID = trackDetailID
-    )
-}

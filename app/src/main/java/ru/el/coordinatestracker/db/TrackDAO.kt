@@ -4,26 +4,55 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ru.el.coordinatestracker.db.model.Track
-import ru.el.coordinatestracker.db.model.TrackDBEntity
-import ru.el.coordinatestracker.db.model.TrackInfoTuple
+import androidx.room.Transaction
+import ru.el.coordinatestracker.db.entities.TrackCoordinates
+import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
+import ru.el.coordinatestracker.db.entities.Tracks
 
 
 @Dao
 interface TrackDAO {
-    @Insert(entity = TrackDBEntity::class)
-    fun insertNewData(statistic: TrackDBEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrack(tracks: Tracks)
 
-    @Query("SELECT all_tracks.id, date, distance, track_detail_id FROM all_tracks\n" +
-            "INNER JOIN track_details ON all_tracks.track_detail_id = track_details.id;")
-    fun getAllData(): List<TrackInfoTuple>
-    /*
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrackCoordinates(tracksCoordinates: TrackCoordinates)
+
+
+
+
+
+    @Transaction
+    @Query("SELECT * FROM Tracks WHERE date = :date")
+    suspend fun getTrackWithCoordinates(date: String): List<TrackWithCoordinates>
+
+
+
+
+/*
+
+ @Transaction
+    @Query("SELECT * FROM Tracks")
+    fun getTracksWithCoordinates(): LiveData<List<TrackWithCoordinates>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrack(track: Track)
 
-    @Query("SELECT * FROM all_tracks ORDER BY date DESC")
-    fun getAllTracksSortedByDate(): LiveData<List<Track>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrackDetail(trackDetail: TrackDetail)*/
 
+
+
+
+
+    /*
+
+ @Query("SELECT * FROM all_tracks ORDER BY date DESC")
+    fun getAllTracksSortedByDate(): List<Track>>
+
+    @Query("SELECT * FROM all_tracks ORDER BY date DESC")
+    fun getAllTrackDetailsSortedByDate(): LiveData<List<Track>>
 
 
     @Delete
@@ -54,6 +83,16 @@ interface TrackDAO {
 
         @Query("SELECT AVG(avgSpeedInKMH) FROM running_table")
         fun getTotalAvgSpeed(): LiveData<Float>
+
+
+
+
+         @Insert(entity = TrackDBEntity::class)
+    fun insertNewData(statistic: TrackDBEntity)
+
+    @Query("SELECT all_tracks.id, date, distance, track_detail_id FROM all_tracks\n" +
+            "INNER JOIN track_details ON all_tracks.track_detail_id = track_details.id;")
+    fun getAllData(): List<TrackInfoTuple>
 
          */
 

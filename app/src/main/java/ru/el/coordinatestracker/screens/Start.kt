@@ -32,7 +32,7 @@ import ru.el.coordinatestracker.utils.TYPE_ROOM
 @Composable
 fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
 
-
+/*
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -80,7 +80,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         }
 
 
-    }
+    }*/
 
 }
 //}
