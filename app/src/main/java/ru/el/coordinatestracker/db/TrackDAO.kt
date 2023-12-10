@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
@@ -27,6 +28,8 @@ interface TrackDAO {
     @Query("SELECT * FROM Tracks WHERE date = :date")
     suspend fun getTrackWithCoordinates(date: String): List<TrackWithCoordinates>
 
+    @Query("SELECT * FROM Tracks")
+    fun getTracks(): Flow<List<Tracks>>
 
 
 

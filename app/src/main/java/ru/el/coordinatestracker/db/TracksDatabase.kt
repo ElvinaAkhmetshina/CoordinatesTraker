@@ -48,7 +48,7 @@ abstract class TracksDatabase: RoomDatabase() {
 )
 
 abstract class TracksDatabase: RoomDatabase() {
-    abstract val TrackDAO: TrackDAO
+    abstract val trackDAO: TrackDAO
 
     companion object {
         @Volatile
@@ -65,5 +65,10 @@ abstract class TracksDatabase: RoomDatabase() {
                 }
             }
         }
+
+
+
+
+
     }
 }

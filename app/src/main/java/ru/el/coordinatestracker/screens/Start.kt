@@ -26,13 +26,11 @@ import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.MainViewModelFactory
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
-import ru.el.coordinatestracker.utils.Constants.Keys.START
-import ru.el.coordinatestracker.utils.TYPE_ROOM
 
 @Composable
 fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
 
-/*
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,9 +38,9 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
     ) {
         Button(
             onClick = {
-                viewModel.initDatabase(TYPE_ROOM) {
+                //viewModel.initDatabase(TYPE_ROOM) {
                     navController.navigate(route = NavigationPath.List.route)
-                }
+                //}
             },
             modifier = Modifier
                 .width(250.dp)
@@ -60,9 +58,9 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         }
         Button(
             onClick = {
-                viewModel.initDatabase(TYPE_ROOM) {
+                //viewModel.initDatabase(TYPE_ROOM) {
                     navController.navigate(route = NavigationPath.List.route)
-                }
+                //}
             },
             modifier = Modifier
                 .width(250.dp)
@@ -71,7 +69,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         )
         {
             Text(
-                text = START,
+                text = "Начать запись нового трека",
                 fontFamily = FontFamily.Cursive,
                 fontStyle = FontStyle.Italic,
                 fontWeight = FontWeight.Bold,
@@ -80,7 +78,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         }
 
 
-    }*/
+    }
 
 }
 //}

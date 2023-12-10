@@ -1,12 +1,9 @@
 package ru.el.coordinatestracker.screens
 
 import android.app.Application
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
@@ -32,9 +29,6 @@ import ru.el.coordinatestracker.db.entities.Tracks
 //import ru.el.coordinatestracker.db.model.Track
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 
 
@@ -64,6 +58,7 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold
         )
+
 
         /*Row {
             RadioButton(

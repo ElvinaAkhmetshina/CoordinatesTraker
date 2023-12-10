@@ -30,27 +30,36 @@ import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.TracksNavigationHost
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
+
 class MainActivity : ComponentActivity() {
     val main_color = Color(0xFF298A81)
 
 
-
+    ///private val trackDatabase by lazy { TracksDatabase.getInstance(this).TrackDAO() }
 
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
+        val dao = TracksDatabase.getInstance(this).trackDAO
         super.onCreate(savedInstanceState)
         setContent {
-            CoordinatesTrackerTheme{
+            CoordinatesTrackerTheme {
                 val context = LocalContext.current
-                val mViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+                val mViewModel: MainViewModel =
+                    viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
 
                 Scaffold(
                     topBar = {
                         TopAppBar(
                             title = {
-                                Text(text = "ELVINA_AKHMETSHINA", fontFamily = FontFamily.Cursive, fontStyle = FontStyle.Italic, fontWeight = FontWeight.Bold, fontSize = 32.sp)
+                                Text(
+                                    text = "ELVINA_AKHMETSHINA",
+                                    fontFamily = FontFamily.Cursive,
+                                    fontStyle = FontStyle.Italic,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 32.sp
+                                )
                             },
-                            backgroundColor =main_color,
+                            backgroundColor = main_color,
                             contentColor = Color.White,
                             elevation = 20.dp
 
@@ -69,7 +78,23 @@ class MainActivity : ComponentActivity() {
 
 
             }
+            val dao = TracksDatabase.getInstance(this).trackDAO
+            val schools = listOf(
+                Tracks(1111, 1111)
+            )
 
+
+            val students = listOf(
+                TrackCoordinates(1111, 2222)
+            )
+
+            lifecycleScope.launch {
+
+                schools.forEach { dao.insertTrack(it) }
+
+                students.forEach { dao.insertTrackCoordinates(it) }
+                //работало
+                /*
             val dao = TracksDatabase.getInstance(this).TrackDAO
 
 
@@ -90,11 +115,13 @@ class MainActivity : ComponentActivity() {
 
 
                 //val schoolWithStudents = dao.getSchoolWithStudents("Kotlin School")
+            }*/
+
+
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
