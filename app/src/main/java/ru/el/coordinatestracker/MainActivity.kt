@@ -34,6 +34,66 @@ import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 class MainActivity : ComponentActivity() {
     val main_color = Color(0xFF298A81)
 
+    //код маклецова с лекции
+    /*private val mvm: MainViewModel by lazy{
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
+    private val locationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        mvm.showRequestDialog = false
+        when {
+            permissions.getOrDefault(ACCESS_FINE_LOCATION, false) -> {
+
+            }
+            permissions.getOrDefault(ACCESS_COARSE_LOCATION, false) -> {
+            }
+            else -> {
+                finish()
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MyLocatorTheme {
+                MainUI(
+                    mvm,
+                    Modifier.fillMaxSize()
+                )
+                mvm.showRequestDialog =
+                    !mvm.isPermissionsGranted(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION, context = this)
+                if (mvm.showRequestDialog){
+                    LocationRequestDialog(
+                        onDeny = {
+                            finish()
+                        }
+                    ){
+                        // Формирование запроса из системы на доступ к геолокации
+                        mvm.showRequestDialog = false
+                        locationPermissionRequest.launch(
+                            arrayOf(
+                                ACCESS_FINE_LOCATION,
+                                ACCESS_COARSE_LOCATION
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (mvm.requestLocationUpdates) mvm.startLocationUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mvm.stopLocationUpdates()
+    }*/
 
     ///private val trackDatabase by lazy { TracksDatabase.getInstance(this).TrackDAO() }
 
@@ -129,6 +189,72 @@ fun DefaultPreview() {
 
     }
 }
+
+//код маклецова с лекции
+/*@Composable
+fun MainUI(
+    mvm: MainViewModel,
+    modifier: Modifier = Modifier,
+){
+    val loc by mvm.location.collectAsState()
+    val locStr = loc?.let{ "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
+    Text(
+        text = locStr,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LocationRequestDialog(
+    modifier: Modifier = Modifier,
+    onDeny: ()->Unit,
+    onAllow: ()->Unit,
+){
+    AlertDialog(
+        onDismissRequest = { onDeny() },
+    ) {
+        ElevatedCard(
+            modifier = modifier.shadow(3.dp, shape = RoundedCornerShape(20.dp))
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    painterResource(id = R.drawable.twotone_not_listed_location_48),
+                    contentDescription = null,
+                    tint = colorResource(id = R.color.brown)
+                )
+                Text(stringResource(R.string.loc_permission_request))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Button(onClick = { onDeny() }) {
+                        Text("No")
+                    }
+                    Button(onClick = { onAllow() }) {
+                        Text("Yes")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun LocationRequestDialogPreview(){
+    LocationRequestDialog(onDeny = { /TODO/ }) {
+
+    }
+}*/
+
+
+
 
 
 /* override fun onCreate(savedInstanceState: Bundle?) {
