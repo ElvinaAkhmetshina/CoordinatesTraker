@@ -1,10 +1,12 @@
 package ru.el.coordinatestracker.utils
 
+import ru.el.coordinatestracker.db.TrackRepository
+
 
 const val TYPE_ROOM = "type_room"
 
 
-//lateinit var REPOSITORY: DatabaseRepository
+lateinit var REPOSITORY: TrackRepository
 
 object Constants {
     object Keys{

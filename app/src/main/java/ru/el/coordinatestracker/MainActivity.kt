@@ -5,6 +5,7 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,6 +44,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.db.TracksDatabase
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
+import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.navigation.TracksNavigationHost
@@ -50,7 +52,7 @@ import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
 
 class MainActivity : ComponentActivity() {
-    val main_color = Color(0xFF298A81)
+
 
     //код маклецова с лекции
     private val mvm: MainViewModel by lazy {
@@ -77,6 +79,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //база данных
+        //val dao = TracksDatabase.getInstance(this).getDao()
+        val t1 = Tracks(111,111)
+        val t2 = TrackCoordinates(111, 123)
+        lifecycleScope.launch {
+            TracksDatabase.getDao(applicationContext).apply {
+                insertTrack(t1)
+                insertTrackCoordinates(t2)
+                //Log.i("TRACKS", getTracks().joinToString())
+            }
+        }
         setContent {
             CoordinatesTrackerTheme {
                 MainUI(
@@ -235,15 +248,48 @@ fun DefaultPreview() {
 
 
 //код маклецова с лекции
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainUI(
     mvm: MainViewModel,
     modifier: Modifier = Modifier,
 ){
     val loc by mvm.location.collectAsState()
+    val main_color = Color(0xFF298A81)
     val locStr = loc?.let{ "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
+    /*
     Text(
         text = locStr,
+    )*/
+
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "ELVINA_AKHMETSHINA",
+                        fontFamily = FontFamily.Cursive,
+                        fontStyle = FontStyle.Italic,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 32.sp
+                    )
+                },
+                backgroundColor = main_color,
+                contentColor = Color.White,
+                elevation = 20.dp
+
+            )
+
+        },
+        content = {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ) {
+                TracksNavigationHost(mvm)
+            }
+        }
     )
 }
 
@@ -255,13 +301,13 @@ fun LocationRequestDialog(
     onAllow: ()->Unit,
 ){
     AlertDialog(
-        /*
+
         title = {
-            Text(text = dialogTitle)
+            Text(text = "Внимание! Запрос на сбор данных")
         },
         text = {
-            Text(text = dialogText)
-        },*/
+            Text(text = "Даете ли вы свое согласие на сбор данных о вашем местоположении?")
+        },
         onDismissRequest = {
                            onDeny()
             /*onDismissRequest()*/
@@ -273,7 +319,7 @@ fun LocationRequestDialog(
                     onAllow()
                 }
             ) {
-                Text("Confirm")
+                Text("Разрешаю")
             }
         },
         dismissButton = {
@@ -283,7 +329,7 @@ fun LocationRequestDialog(
                     /*onDismissRequest()*/
                 }
             ) {
-                Text("Dismiss")
+                Text("Отказываюсь")
             }
         }
     )

@@ -1,9 +1,12 @@
 package ru.el.coordinatestracker.screens
 
 import android.app.Application
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
@@ -12,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,18 +30,16 @@ import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.MainViewModel
 //import ru.el.coordinatestracker.MainViewModelFactory
 import ru.el.coordinatestracker.db.entities.Tracks
-//import ru.el.coordinatestracker.db.model.Track
 import ru.el.coordinatestracker.navigation.NavigationPath
-import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
-import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 
-/*
+
+
 @Composable
 fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
 
-    /*var tracks =
-        viewModel.readAllNotes().observeAsState(listOf())
-    var sort by remember{ mutableStateOf(SORT_BY_PRIORITY) }
+    //var tracks =
+      //  viewModel.readAll().collectAsState(listOf())
+    /*var sort by remember{ mutableStateOf(SORT_BY_PRIORITY) }
     var notes =
         viewModel.readAllNotes().observeAsState(listOf()).value.sortedByDescending { it.priority }
 
@@ -53,7 +55,6 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
     Column(Modifier.selectableGroup())
     {
         Text(
-            //text = track.title,
             text = "экран с треками",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold
@@ -78,12 +79,13 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
         }
         LazyColumn {
 
-            /*
+
             items(tracks) { track ->
                 TrackItem(track = track, navController = navController)
-            }*/
+            }
         }*/
     }
+        /*
     //BottomAppBar {
     FloatingActionButton(
         onClick = {
@@ -97,7 +99,7 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
             contentDescription = ADD_NOTE,
             tint = Color.White
         )
-    }
+    }*/
 
     //}
 
@@ -113,14 +115,14 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
 fun TrackItem(track: Tracks, navController: NavHostController) {
 
     Card(
-        /*
+
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 24.dp)
             .clickable {
-                navController.navigate(NavigationPath.Track.route + "/${track.id}")
+                navController.navigate(NavigationPath.Track.route + "/${track.date}")
             },
-        elevation = 6.dp*/
+        elevation = 6.dp
     )
     {
         Column(
@@ -129,7 +131,7 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
         ) {
             Text(
                 //text = track.title,
-                text = "экран с треками",
+                text = "экран со списком треков",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -148,7 +150,7 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
     }
 }
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun prevListScreen() {

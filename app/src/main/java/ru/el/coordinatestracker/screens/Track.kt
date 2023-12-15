@@ -1,5 +1,5 @@
 package ru.el.coordinatestracker.screens
-/*
+
 import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,7 +36,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.MainViewModel
-import ru.el.coordinatestracker.MainViewModelFactory
+import ru.el.coordinatestracker.db.entities.Tracks
+//import ru.el.coordinatestracker.MainViewModelFactory
 
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
@@ -43,21 +45,19 @@ import ru.el.coordinatestracker.utils.Constants
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TrackScreen(navController: NavHostController, noteId: String?, viewModel: MainViewModel){
-    /*val notes = viewModel.readAllNotes().observeAsState(listOf()).value
-    val note = notes.firstOrNull { it.id == noteId?.toInt() } ?: Track(
-        title = Constants.Keys.NONE,
-        subtitle = Constants.Keys.NONE,
-        date=System.currentTimeMillis(),
-        priority = 0
-    )*/
-    val track = "track"
+fun TrackScreen(navController: NavHostController, date: String?, viewModel: MainViewModel){
+    //val tracks = viewModel.readAll().collectAsState(listOf()).value
+    //val track = tracks.firstOrNull { it.date == date?.toLong() } ?: Tracks(
+      // date = 0,
+       // distance = 0
+    //)
+    //val track = "track"
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
     var title by remember { mutableStateOf(Constants.Keys.EMPTY) }
     var subtitle by remember { mutableStateOf(Constants.Keys.EMPTY) }
     var priority by remember { mutableStateOf("") }
-
+/*
 
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
@@ -218,11 +218,11 @@ fun TrackScreen(navController: NavHostController, noteId: String?, viewModel: Ma
         }
         //}
     }
-
+*/
 }
 
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun prevTrackScreen(){

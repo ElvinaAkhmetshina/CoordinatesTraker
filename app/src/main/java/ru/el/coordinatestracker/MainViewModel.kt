@@ -28,6 +28,8 @@ import ru.el.coordinatestracker.locating.Locator.locationCallback
 import ru.el.coordinatestracker.locating.Locator.locationRequest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import kotlinx.coroutines.flow.Flow
+import ru.el.coordinatestracker.utils.REPOSITORY
 import java.lang.IllegalArgumentException
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -45,8 +47,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _location: MutableStateFlow<Location?> = MutableStateFlow(null)
     val location: StateFlow<Location?> = _location
-
-
+    //fun readAll() = REPOSITORY.readAll
+    val db = TracksDatabase.getDao(
+        getApplication<Application>().applicationContext
+    )
+    val tracks: Flow<List<Tracks>>
+        get() = db.getTracks()
     @SuppressLint("MissingPermission")
     fun startLocationUpdates() {
         if (isPermissionsGranted(
@@ -85,8 +91,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
 
+/*
+    fun initDatabase(onSuccess: () -> Unit)
+    {
+        val dao = TracksDatabase.getInstance(context = context).getDao()
+        REPOSITORY = TrackRepository(dao)
+        onSuccess()
 
-
+    }*/
 
 
 
@@ -115,8 +127,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 //wored
 
-     suspend fun initDatabase(type: String, onSuccess: () -> Unit)
-     {
+     //suspend fun initDatabase(type: String, onSuccess: () -> Unit)
+     //{
  /*
          Log.d("checkData", "MainViewModel initDatabase with type: $type")
          when(type)
@@ -154,7 +166,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }*/
         */
 
-    }
+   // }
     /*
   */
 

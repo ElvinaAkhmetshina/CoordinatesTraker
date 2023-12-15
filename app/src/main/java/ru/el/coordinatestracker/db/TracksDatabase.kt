@@ -46,15 +46,19 @@ abstract class TracksDatabase: RoomDatabase() {
     ],
     version = 1
 )
+abstract class ADatabase : RoomDatabase(){
 
-abstract class TracksDatabase: RoomDatabase() {
-    abstract val trackDAO: TrackDAO
+    abstract fun getTrackDao(): TrackDAO
+}
 
-    companion object {
-        @Volatile
-        private var INSTANCE: TracksDatabase? = null
+object TracksDatabase{
+    //abstract val trackDAO: TrackDAO
+   // abstract fun getTrackDao(): TrackDAO
+   // companion object {
+        //@Volatile
+     //   private var INSTANCE: TracksDatabase? = null
 
-        fun getInstance(context: Context): TracksDatabase {
+        /*fun getInstance(context: Context): TracksDatabase {
             synchronized(this) {
                 return INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
@@ -64,11 +68,20 @@ abstract class TracksDatabase: RoomDatabase() {
                     INSTANCE = it
                 }
             }
-        }
+        }*/
+        private lateinit var db: TrackDAO
+        fun getDao(applicationContext: Context) = if (!::db.isInitialized){
+            db = Room.databaseBuilder(
+                applicationContext,
+                ADatabase::class.java,
+                "tracks_db"
+            ).build().getTrackDao()
+            db
+        } else db
 
 
 
 
 
     }
-}
+//}

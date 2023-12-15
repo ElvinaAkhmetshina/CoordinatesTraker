@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.MainViewModel
+import ru.el.coordinatestracker.db.TracksDatabase
 //import ru.el.coordinatestracker.MainViewModelFactory
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
@@ -38,8 +39,9 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
     ) {
         Button(
             onClick = {
-                //viewModel.initDatabase(TYPE_ROOM) {
-                    navController.navigate(route = NavigationPath.List.route)
+
+                //viewModel.initDatabase{
+                    //navController.navigate(route = NavigationPath.List.route)
                 //}
             },
             modifier = Modifier
