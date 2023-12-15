@@ -1,5 +1,5 @@
 package ru.el.coordinatestracker.screens
-
+/*
 import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -236,4 +236,4 @@ fun prevTrackScreen(){
             noteId = "1"
         )
     }
-}
+}*/

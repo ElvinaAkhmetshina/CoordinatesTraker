@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.MainViewModel
+/*
 import ru.el.coordinatestracker.MainViewModelFactory
 
 import ru.el.coordinatestracker.navigation.NavigationPath
@@ -123,4 +124,4 @@ fun prevAddScreen(){
 
         AddScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
-}
+}*/

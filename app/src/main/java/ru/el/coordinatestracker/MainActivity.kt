@@ -1,32 +1,50 @@
 package ru.el.coordinatestracker
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.db.TracksDatabase
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
+import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.navigation.TracksNavigationHost
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
@@ -35,7 +53,7 @@ class MainActivity : ComponentActivity() {
     val main_color = Color(0xFF298A81)
 
     //код маклецова с лекции
-    /*private val mvm: MainViewModel by lazy{
+    private val mvm: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
 
@@ -47,8 +65,10 @@ class MainActivity : ComponentActivity() {
             permissions.getOrDefault(ACCESS_FINE_LOCATION, false) -> {
 
             }
+
             permissions.getOrDefault(ACCESS_COARSE_LOCATION, false) -> {
             }
+
             else -> {
                 finish()
             }
@@ -58,19 +78,23 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyLocatorTheme {
+            CoordinatesTrackerTheme {
                 MainUI(
                     mvm,
                     Modifier.fillMaxSize()
                 )
                 mvm.showRequestDialog =
-                    !mvm.isPermissionsGranted(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION, context = this)
-                if (mvm.showRequestDialog){
+                    !mvm.isPermissionsGranted(
+                        ACCESS_COARSE_LOCATION,
+                        ACCESS_FINE_LOCATION,
+                        context = this
+                    )
+                if (mvm.showRequestDialog) {
                     LocationRequestDialog(
                         onDeny = {
                             finish()
                         }
-                    ){
+                    ) {
                         // Формирование запроса из системы на доступ к геолокации
                         mvm.showRequestDialog = false
                         locationPermissionRequest.launch(
@@ -93,10 +117,15 @@ class MainActivity : ComponentActivity() {
     override fun onPause() {
         super.onPause()
         mvm.stopLocationUpdates()
-    }*/
+    }
 
+}
+
+
+    //
     ///private val trackDatabase by lazy { TracksDatabase.getInstance(this).TrackDAO() }
-
+//my working code
+    /*
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         val dao = TracksDatabase.getInstance(this).trackDAO
@@ -188,10 +217,25 @@ fun DefaultPreview() {
     CoordinatesTrackerTheme {
 
     }
-}
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //код маклецова с лекции
-/*@Composable
+@Composable
 fun MainUI(
     mvm: MainViewModel,
     modifier: Modifier = Modifier,
@@ -203,7 +247,7 @@ fun MainUI(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+//@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LocationRequestDialog(
     modifier: Modifier = Modifier,
@@ -211,9 +255,44 @@ fun LocationRequestDialog(
     onAllow: ()->Unit,
 ){
     AlertDialog(
+        /*
+        title = {
+            Text(text = dialogTitle)
+        },
+        text = {
+            Text(text = dialogText)
+        },*/
+        onDismissRequest = {
+                           onDeny()
+            /*onDismissRequest()*/
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    /*onConfirmation()*/
+                    onAllow()
+                }
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+
+                    /*onDismissRequest()*/
+                }
+            ) {
+                Text("Dismiss")
+            }
+        }
+    )
+    /*
+    AlertDialog(
         onDismissRequest = { onDeny() },
-    ) {
-        ElevatedCard(
+        confirmButton = {onAllow()}
+    ) 
+        Card(
             modifier = modifier.shadow(3.dp, shape = RoundedCornerShape(20.dp))
         ) {
             Column(
@@ -225,7 +304,7 @@ fun LocationRequestDialog(
                 Icon(
                     painterResource(id = R.drawable.twotone_not_listed_location_48),
                     contentDescription = null,
-                    tint = colorResource(id = R.color.brown)
+                    tint = colorResource(id = R.color.black)
                 )
                 Text(stringResource(R.string.loc_permission_request))
                 Row(
@@ -241,17 +320,17 @@ fun LocationRequestDialog(
                     }
                 }
             }
-        }
+        }*/
     }
-}
+
 
 @Preview
 @Composable
 fun LocationRequestDialogPreview(){
-    LocationRequestDialog(onDeny = { /TODO/ }) {
+    LocationRequestDialog(onDeny = { /*TODO*/ }) {
 
     }
-}*/
+}
 
 
 

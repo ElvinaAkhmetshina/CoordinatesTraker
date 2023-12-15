@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.MainViewModel
-import ru.el.coordinatestracker.MainViewModelFactory
+//import ru.el.coordinatestracker.MainViewModelFactory
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
@@ -82,7 +82,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
 
 }
 //}
-
+/*
 
 @Preview(showBackground = true)
 @Composable
@@ -94,4 +94,4 @@ fun prevStartScreen() {
 
         StartScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
-}
+}*/
