@@ -259,7 +259,7 @@ fun MainUI(
     modifier: Modifier = Modifier,
 ){
     val loc by mvm.location.collectAsState()
-    val main_color = Color(0xFF298A81)
+    val main_color = Color(0xFF34857D)
     val locStr = loc?.let{ "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
     /*
     Text(

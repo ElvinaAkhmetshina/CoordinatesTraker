@@ -61,7 +61,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         Button(
             onClick = {
                 //viewModel.initDatabase(TYPE_ROOM) {
-                   // navController.navigate(route = NavigationPath.List.route)
+                   navController.navigate(route = NavigationPath.Add.route)
                 //}
             },
             modifier = Modifier

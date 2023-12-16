@@ -28,6 +28,8 @@ import ru.el.coordinatestracker.locating.Locator.locationCallback
 import ru.el.coordinatestracker.locating.Locator.locationRequest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import kotlinx.coroutines.flow.Flow
 import ru.el.coordinatestracker.utils.REPOSITORY
 import java.lang.IllegalArgumentException
@@ -56,8 +58,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     @SuppressLint("MissingPermission")
     fun startLocationUpdates() {
         if (isPermissionsGranted(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION, context = getApplication<Application>().applicationContext)) {
+                ACCESS_FINE_LOCATION,
+                ACCESS_COARSE_LOCATION, context = getApplication<Application>().applicationContext)) {
             fusedLocationClient.lastLocation.addOnCompleteListener {
                 viewModelScope.launch {
                     _location.emit(it.result)
@@ -87,6 +89,28 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         permissions.fold(true) { acc, perm ->
             acc && context.checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED
         }
+
+
+    @Composable
+    fun StartTracking(viewModel: MainViewModel, isTracking: Boolean): MutableList<String> {
+        val loc by viewModel.location.collectAsState()
+        val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
+        //val isTracking = true
+        var received_tracks: MutableList<String> = mutableListOf()
+        while (isTracking)
+        {
+            if (!received_tracks.last().contains(locStr))
+                received_tracks.add(locStr)
+        }
+
+       return received_tracks
+    }
+    fun StopTracking(viewModel: MainViewModel, isTracking: Boolean) {
+        val isTracking = false
+        //var received_tracks: MutableList<String> = mutableListOf()
+
+    }
+
 
     //fun getAllTracks() {
       //  var tracks: LiveData<List<Tracks>> = db.getTracks()

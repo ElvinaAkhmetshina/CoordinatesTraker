@@ -45,18 +45,28 @@ import ru.el.coordinatestracker.utils.Constants
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TrackScreen(navController: NavHostController, date: String?, viewModel: MainViewModel){
+fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
+    var received_tracks =viewModel.StartTracking(viewModel = viewModel, isTracking = false)
+
+ Text(text = received_tracks.toString())
+///add to database!!!!
+
+
+
+
+
+
     //val tracks = viewModel.readAll().collectAsState(listOf()).value
     //val track = tracks.firstOrNull { it.date == date?.toLong() } ?: Tracks(
       // date = 0,
        // distance = 0
     //)
     //val track = "track"
-    val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val coroutineScope = rememberCoroutineScope()
-    var title by remember { mutableStateOf(Constants.Keys.EMPTY) }
-    var subtitle by remember { mutableStateOf(Constants.Keys.EMPTY) }
-    var priority by remember { mutableStateOf("") }
+    //val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    //val coroutineScope = rememberCoroutineScope()
+    //var title by remember { mutableStateOf(Constants.Keys.EMPTY) }
+    //var subtitle by remember { mutableStateOf(Constants.Keys.EMPTY) }
+    //var priority by remember { mutableStateOf("") }
 /*
 
     ModalBottomSheetLayout(

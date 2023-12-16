@@ -1,48 +1,49 @@
 package ru.el.coordinatestracker.screens
 
-import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.MainViewModel
-/*
-import ru.el.coordinatestracker.MainViewModelFactory
+
+//import ru.el.coordinatestracker.MainViewModelFactory
 
 import ru.el.coordinatestracker.navigation.NavigationPath
-import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 import ru.el.coordinatestracker.utils.Constants
 import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 
+
+
+
+
 @Composable
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
-    var title by remember{ mutableStateOf("") }
-    var subtitle by remember{ mutableStateOf("") }
+   // var title by remember{ mutableStateOf("") }
+    //var subtitle by remember{ mutableStateOf("") }
 
-    var priority by remember{ mutableStateOf("") }
+   // var priority by remember{ mutableStateOf("") }
+    var isButtonEnabledStart by remember{ mutableStateOf(true) }
     var isButtonEnabled by remember{ mutableStateOf(false) }
-
+    val loc by viewModel.location.collectAsState()
+    val locStr = loc?.let{ "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
+    var received_tracks = viewModel.StartTracking(viewModel = viewModel, isTracking = true)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -50,12 +51,13 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
         verticalArrangement = Arrangement.Center
     )
     {
+
         Text(
             text = ADD_NOTE,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = 8.dp)
-        )
+        )/*
         OutlinedTextField(value = title, onValueChange = {
             title = it
             isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
@@ -64,30 +66,22 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
             subtitle = it
             isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
         }, label = { Text(text = "Введите текст заметки") }, isError = subtitle.isEmpty())
+*/
 
         Column(Modifier.selectableGroup())
         {
-            Row{
-                RadioButton(
-                    selected = priority == "1",
-                    onClick = { priority = "1" },
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text("Приоритет: обычный", fontSize = 24.sp)
-            }
-            Row{
-                RadioButton(
-                    selected = priority == "2",
-                    onClick = { priority = "2" },
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text("Приоритет: высокий", fontSize = 24.sp)
-            }
+            Text(text = locStr)
         }
+
+
+
+        //stop
         Button(
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabled,
-            onClick = {/*
+            onClick = {
+                navController.navigate(NavigationPath.Track.route)
+            /*
                 viewModel.addNote(
                     note = Track(
 
@@ -104,6 +98,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
         {
             Text(text = ADD_NOTE, fontSize = 24.sp)
         }
+        //back
         Button(
 
             onClick = { navController.navigate(NavigationPath.List.route) }) {
@@ -115,6 +110,8 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
 //}
 }
 
+
+/*
 @Preview(showBackground = true)
 @Composable
 fun prevAddScreen(){
