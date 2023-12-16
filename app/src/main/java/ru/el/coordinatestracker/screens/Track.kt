@@ -46,9 +46,44 @@ import ru.el.coordinatestracker.utils.Constants
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
-    var received_tracks =viewModel.StartTracking(viewModel = viewModel, isTracking = false)
+    var isButtonEnabledStart by remember{ mutableStateOf(true) }
+    val loc by viewModel.location.collectAsState()
+    val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
+    var received_tracks: MutableList<String> = mutableListOf()
+    received_tracks.add(locStr)
+    while (received_tracks.last() != locStr)
+        received_tracks.add(locStr)
+    //viewModel.StartNewTracking(viewModel = viewModel, isTracking = true, received_tracks = received_tracks)
 
- Text(text = received_tracks.toString())
+
+  Text(text = locStr)
+    println(received_tracks.toString())
+    Button(
+        modifier = Modifier.padding(top = 16.dp),
+        enabled = isButtonEnabledStart,
+        onClick = {//isTracking=false
+            //rt = received_tracks.toString()
+
+            println(received_tracks.toString())
+            navController.navigate(NavigationPath.Start.route)
+            /*
+                viewModel.addNote(
+                    note = Track(
+
+                        title = title,
+                        subtitle = subtitle,
+                        date = System.currentTimeMillis()/1000,
+                        priority = priority.toInt()
+                    )
+                ) {
+                    navController.navigate(NavigationPath.List.route)
+                }*/
+        }
+
+    )
+    {
+        Text(text = "Остановить сбор координат", fontSize = 24.sp)
+    }
 ///add to database!!!!
 
 

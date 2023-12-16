@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class Tracks(
     @PrimaryKey(autoGenerate = false)
 val date: Long,
+    val dateStop: Long,
 val distance: Long
 
 

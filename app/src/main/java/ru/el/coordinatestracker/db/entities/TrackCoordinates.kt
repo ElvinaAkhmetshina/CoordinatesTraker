@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class TrackCoordinates(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val trackDate: Long,
-val coordinates: Long
+val coordinates: String
 
 )

@@ -83,8 +83,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         //база данных
         //val dao = TracksDatabase.getInstance(this).getDao()
-        val t1 = Tracks(111,111)
-        val t2 = TrackCoordinates(111, 123)
+        val t1 = Tracks(111,112,111)
+        val t2 = TrackCoordinates(1, 111,"111")
 
         lifecycleScope.launch {
             TracksDatabase.getDao(applicationContext).apply {

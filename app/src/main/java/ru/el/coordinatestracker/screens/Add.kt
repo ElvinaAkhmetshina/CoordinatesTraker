@@ -37,13 +37,21 @@ import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
    // var title by remember{ mutableStateOf("") }
     //var subtitle by remember{ mutableStateOf("") }
-
+    var isTracking = true
    // var priority by remember{ mutableStateOf("") }
     var isButtonEnabledStart by remember{ mutableStateOf(true) }
     var isButtonEnabled by remember{ mutableStateOf(false) }
     val loc by viewModel.location.collectAsState()
-    val locStr = loc?.let{ "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
-    var received_tracks = viewModel.StartTracking(viewModel = viewModel, isTracking = true)
+    val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
+
+
+    var received_tracks: MutableList<String> = mutableListOf()
+    received_tracks.add(locStr)
+//вроде работало
+    //while (received_tracks.last() != locStr)
+      //  received_tracks.add(locStr)
+
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -70,17 +78,22 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
 
         Column(Modifier.selectableGroup())
         {
-            Text(text = locStr)
+
         }
+
+
 
 
 
         //stop
         Button(
             modifier = Modifier.padding(top = 16.dp),
-            enabled = isButtonEnabled,
-            onClick = {
-                navController.navigate(NavigationPath.Track.route)
+            enabled = isButtonEnabledStart,
+            onClick = {isTracking=false
+
+
+
+                navController.navigate(NavigationPath.Start.route)
             /*
                 viewModel.addNote(
                     note = Track(
@@ -94,9 +107,10 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
                     navController.navigate(NavigationPath.List.route)
                 }*/
             }
+
         )
         {
-            Text(text = ADD_NOTE, fontSize = 24.sp)
+            Text(text = "Остановить сбор координат", fontSize = 24.sp)
         }
         //back
         Button(
@@ -109,6 +123,8 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
     }
 //}
 }
+
+
 
 
 /*

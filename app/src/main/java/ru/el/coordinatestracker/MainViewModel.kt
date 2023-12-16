@@ -110,6 +110,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         //var received_tracks: MutableList<String> = mutableListOf()
 
     }
+   @Composable
+    fun StartNewTracking(viewModel: MainViewModel, isTracking: Boolean, received_tracks: MutableList<String>){
+        while (isTracking) {
+            val loc by viewModel.location.collectAsState()
+            val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
+            //var received_tracks = viewModel.StartTracking(viewModel = viewModel, isTracking = true)
+            if (received_tracks.last() != locStr)
+                received_tracks.add(locStr)
+
+        }
+    }
 
 
     //fun getAllTracks() {
