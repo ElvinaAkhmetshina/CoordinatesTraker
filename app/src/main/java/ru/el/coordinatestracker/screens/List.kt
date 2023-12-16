@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
@@ -27,18 +28,23 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import ru.el.coordinatestracker.MainViewModel
+//import ru.el.coordinatestracker.MainViewModelFactory
+import ru.el.coordinatestracker.db.TrackDAO
+import ru.el.coordinatestracker.db.TrackRepository
+import ru.el.coordinatestracker.db.TrackViewModel
 //import ru.el.coordinatestracker.MainViewModelFactory
 import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.NavigationPath
-
+import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
 
 @Composable
 fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
 
-    //var tracks =
-      //  viewModel.readAll().collectAsState(listOf())
+    //var tracks = viewModel.readTracks().collectAsState(listOf()).value
     /*var sort by remember{ mutableStateOf(SORT_BY_PRIORITY) }
     var notes =
         viewModel.readAllNotes().observeAsState(listOf()).value.sortedByDescending { it.priority }
@@ -47,10 +53,10 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
         notes =
             viewModel.readAllNotes().observeAsState(listOf()).value.sortedByDescending { it.date }
     }*/
+    //var tracks = listOf(1)
+    //val tracks
 
-
-
-
+    val tracks = viewModel.db.getTracks().collectAsState(listOf()).value
 
     Column(Modifier.selectableGroup())
     {
@@ -76,14 +82,12 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
                 modifier = Modifier.padding(8.dp)
             )
             Text("Сортировка по важности", fontSize = 20.sp)
-        }
+        }*/
         LazyColumn {
-
-
             items(tracks) { track ->
                 TrackItem(track = track, navController = navController)
             }
-        }*/
+        }
     }
         /*
     //BottomAppBar {
@@ -130,8 +134,8 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                //text = track.title,
-                text = "экран со списком треков",
+                text = track.date.toString(),
+                //text = "экран со списком треков",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -162,7 +166,5 @@ fun prevListScreen() {
 
         ListScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
-
-
 
 }*/

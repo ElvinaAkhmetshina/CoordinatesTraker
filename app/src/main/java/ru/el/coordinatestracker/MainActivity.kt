@@ -41,7 +41,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import ru.el.coordinatestracker.db.TrackRepository
 import ru.el.coordinatestracker.db.TracksDatabase
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
@@ -58,7 +60,7 @@ class MainActivity : ComponentActivity() {
     private val mvm: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
-
+    //val repository by lazy { TrackRepository(TracksDatabase.) }
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -83,10 +85,12 @@ class MainActivity : ComponentActivity() {
         //val dao = TracksDatabase.getInstance(this).getDao()
         val t1 = Tracks(111,111)
         val t2 = TrackCoordinates(111, 123)
+
         lifecycleScope.launch {
             TracksDatabase.getDao(applicationContext).apply {
                 insertTrack(t1)
                 insertTrackCoordinates(t2)
+               val tracks = getTracks()
                 //Log.i("TRACKS", getTracks().joinToString())
             }
         }

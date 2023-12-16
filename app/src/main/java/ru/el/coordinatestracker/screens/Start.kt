@@ -41,7 +41,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
             onClick = {
 
                 //viewModel.initDatabase{
-                    //navController.navigate(route = NavigationPath.List.route)
+                    navController.navigate(route = NavigationPath.List.route)
                 //}
             },
             modifier = Modifier
@@ -61,7 +61,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         Button(
             onClick = {
                 //viewModel.initDatabase(TYPE_ROOM) {
-                    navController.navigate(route = NavigationPath.List.route)
+                   // navController.navigate(route = NavigationPath.List.route)
                 //}
             },
             modifier = Modifier
@@ -84,8 +84,8 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
 
 }
 //}
-/*
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun prevStartScreen() {

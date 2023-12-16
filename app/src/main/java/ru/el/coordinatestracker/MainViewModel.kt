@@ -51,8 +51,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val db = TracksDatabase.getDao(
         getApplication<Application>().applicationContext
     )
-    val tracks: Flow<List<Tracks>>
-        get() = db.getTracks()
+    //val tracks: LiveData<List<Tracks>>
+      //  get() = db.getTracks()
     @SuppressLint("MissingPermission")
     fun startLocationUpdates() {
         if (isPermissionsGranted(
@@ -88,9 +88,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             acc && context.checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED
         }
 
-
-
-
+    //fun getAllTracks() {
+      //  var tracks: LiveData<List<Tracks>> = db.getTracks()
+   // }
+    //fun readTracks() = REPOSITORY.readAll
 /*
     fun initDatabase(onSuccess: () -> Unit)
     {
@@ -248,8 +249,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
 //my working code
-/*
 
+/*
 class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory
 {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
