@@ -19,9 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.MainViewModel
+import ru.el.coordinatestracker.db.TracksDatabase
+import ru.el.coordinatestracker.db.entities.TrackCoordinates
+import ru.el.coordinatestracker.db.entities.Tracks
 
 //import ru.el.coordinatestracker.MainViewModelFactory
 
@@ -37,20 +41,32 @@ import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
    // var title by remember{ mutableStateOf("") }
     //var subtitle by remember{ mutableStateOf("") }
-    var isTracking = true
+    var isTracking = false
    // var priority by remember{ mutableStateOf("") }
     var isButtonEnabledStart by remember{ mutableStateOf(true) }
     var isButtonEnabled by remember{ mutableStateOf(false) }
     val loc by viewModel.location.collectAsState()
     val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
-
+    var rt = "ttt"
 
     var received_tracks: MutableList<String> = mutableListOf()
     received_tracks.add(locStr)
+
+    //viewModel.insertTrackCoordinates(Tracks(1,2,3),TrackCoordinates(1,1,"11")){}
+viewModel.insertAll(Tracks(1,2,3),TrackCoordinates(1,1,"11"))
 //вроде работало
     //while (received_tracks.last() != locStr)
       //  received_tracks.add(locStr)
+fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
+    val isTracking = !isTracking
 
+    while (isTracking)
+    {
+        received_tracks.add(locStr)
+    }
+    //var received_tracks: MutableList<String> = mutableListOf()
+
+}
 
 
     Column(
@@ -89,11 +105,12 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
         Button(
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabledStart,
-            onClick = {isTracking=false
+            onClick = {isTracking=!isTracking
+               StartTracking(received_tracks,isTracking)
 
 
 
-                navController.navigate(NavigationPath.Start.route)
+                //navController.navigate(NavigationPath.Start.route)
             /*
                 viewModel.addNote(
                     note = Track(
@@ -110,16 +127,19 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
 
         )
         {
-            Text(text = "Остановить сбор координат", fontSize = 24.sp)
+            Text(text = "Start|Stop", fontSize = 24.sp)
         }
         //back
         Button(
 
-            onClick = { navController.navigate(NavigationPath.List.route) }) {
+            onClick = { rt = received_tracks.toString() }
+        )
+        {
 
             Text(text = Constants.Keys.NAV_BACK, fontSize = 24.sp)
 
         }
+        Text(text = rt, fontSize = 24.sp)
     }
 //}
 }

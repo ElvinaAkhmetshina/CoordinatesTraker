@@ -4,6 +4,10 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
+import android.location.Location
+import android.location.LocationManager
+import android.location.LocationRequest
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -41,6 +45,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.db.TrackRepository
@@ -56,10 +63,16 @@ import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 class MainActivity : ComponentActivity() {
 
 
+
+
+
+
     //код маклецова с лекции
     private val mvm: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
+
+
     //val repository by lazy { TrackRepository(TracksDatabase.) }
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -136,7 +149,25 @@ class MainActivity : ComponentActivity() {
         mvm.stopLocationUpdates()
     }
 
+    fun insertAll(tracks: Tracks)
+    {
+        lifecycleScope.launch {
+            TracksDatabase.getDao(applicationContext).apply {
+                insertTrack(tracks)
+                //insertTrackCoordinates(t2)
+                //val tracks = getTracks()
+                //Log.i("TRACKS", getTracks().joinToString())
+            }
+        }}
+
+
+
+
 }
+
+
+
+
 
 
     //

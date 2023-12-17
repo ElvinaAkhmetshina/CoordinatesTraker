@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import ru.el.coordinatestracker.db.entities.Tracks
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,6 +13,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.toList
 
 import kotlinx.coroutines.launch
+import ru.el.coordinatestracker.db.entities.TrackCoordinates
+
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
 class TrackRepository(private val trackDao: TrackDAO) {
@@ -25,7 +28,18 @@ class TrackRepository(private val trackDao: TrackDAO) {
         noteRoomDao.addNote(note = note)
         onSuccess()
     }*/
+ suspend fun create(tracks: Tracks, onSuccess: () -> Unit) {
+    trackDao.insertTrack(tracks = tracks)
+    onSuccess()
+}
 
+
+
+    suspend fun create2(track: Tracks, tracks: TrackCoordinates, onSuccess: () -> Unit) {
+        trackDao.insertTrack(tracks = track)
+        trackDao.insertTrackCoordinates(tracksCoordinates = tracks)
+        onSuccess()
+    }
     fun readTracks() = trackDao.getTracks()
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
@@ -34,10 +48,11 @@ class TrackRepository(private val trackDao: TrackDAO) {
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
     // off the main thread.
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(track: Tracks) {
+    //@Suppress("RedundantSuspendModifier")
+    //@WorkerThread
+    suspend fun insert(track: Tracks, tracks: TrackCoordinates) {
         trackDao.insertTrack(track)
+        trackDao.insertTrackCoordinates(tracks)
     }
 }
 

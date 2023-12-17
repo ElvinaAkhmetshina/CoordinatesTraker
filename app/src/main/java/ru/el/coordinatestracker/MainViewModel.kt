@@ -28,9 +28,15 @@ import ru.el.coordinatestracker.locating.Locator.locationCallback
 import ru.el.coordinatestracker.locating.Locator.locationRequest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.location.LocationManager
+import android.location.LocationRequest
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.utils.REPOSITORY
 import java.lang.IllegalArgumentException
 
@@ -92,35 +98,59 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
     @Composable
-    fun StartTracking(viewModel: MainViewModel, isTracking: Boolean): MutableList<String> {
+    fun StartTracking(viewModel: MainViewModel, isTracking: Boolean, received_tracks: MutableList<String>): MutableList<String> {
         val loc by viewModel.location.collectAsState()
         val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
         //val isTracking = true
-        var received_tracks: MutableList<String> = mutableListOf()
+        //var received_tracks: MutableList<String> = mutableListOf()
         while (isTracking)
         {
-            if (!received_tracks.last().contains(locStr))
-                received_tracks.add(locStr)
+            received_tracks.add(locStr)
         }
 
        return received_tracks
     }
-    fun StopTracking(viewModel: MainViewModel, isTracking: Boolean) {
-        val isTracking = false
-        //var received_tracks: MutableList<String> = mutableListOf()
 
-    }
-   @Composable
-    fun StartNewTracking(viewModel: MainViewModel, isTracking: Boolean, received_tracks: MutableList<String>){
-        while (isTracking) {
-            val loc by viewModel.location.collectAsState()
-            val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
-            //var received_tracks = viewModel.StartTracking(viewModel = viewModel, isTracking = true)
-            if (received_tracks.last() != locStr)
-                received_tracks.add(locStr)
 
+
+
+    fun insertTrack(note: Tracks, onSuccess: () -> Unit)
+    {
+        viewModelScope.launch(Dispatchers.IO){
+            REPOSITORY.create(tracks = note){
+                viewModelScope.launch(Dispatchers.Main)
+                {
+                    onSuccess()
+                }
+            }
         }
     }
+    fun insertTrackCoordinates(track:Tracks, tracks: TrackCoordinates, onSuccess: () -> Unit)
+    {
+        viewModelScope.launch(Dispatchers.IO){
+            REPOSITORY.insert(track = track, tracks = tracks)
+        }
+    }
+
+    fun insertAll(tracks: Tracks,track: TrackCoordinates)
+    {
+        viewModelScope.launch {
+            TracksDatabase.getDao(context).apply {
+                insertTrack(tracks)
+                insertTrackCoordinates(track)
+                //val tracks = getTracks()
+                //Log.i("TRACKS", getTracks().joinToString())
+            }
+        }}
+
+
+
+
+
+
+
+
+
 
 
     //fun getAllTracks() {
