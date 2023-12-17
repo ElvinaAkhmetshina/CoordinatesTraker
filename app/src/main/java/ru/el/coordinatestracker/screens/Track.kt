@@ -32,17 +32,17 @@ import ru.el.coordinatestracker.db.entities.Tracks
 
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.utils.Constants
-
+/*
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trackId: String?){
     val tracks = viewModel.db.getTracks().collectAsState(listOf()).value
-    val track = tracks.firstOrNull { it.date == trackId?.toLong() } ?: Tracks(
-        date = 111,
-        dateStop = 0,
+    val track = tracks.firstOrNull { it.id == trackId?.toInt() } ?: Tracks(
+        dateStart = 111,
+        dateEnd = 0,
         distance = 0
     )
-    val trackCoordinates = viewModel.db.getTrackCoordinates("111").collectAsState(listOf()).value
+    val trackCoordinates = viewModel.db.getTrackCoordinates("1").collectAsState(listOf()).value
 
 
 
@@ -194,14 +194,14 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
             {
                // if (track != null) {
                     Text(
-                        text = track.date.toString(),
+                        text = track.dateStart.toString(),
                         //text = "экран одного трека",
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 32.dp)
                     )
                 Text(
-                    text = track.dateStop.toString(),
+                    text = track.dateEnd.toString(),
                     //text = "экран одного трека",
                     fontSize = 40.sp,
                     fontWeight = FontWeight.Bold,

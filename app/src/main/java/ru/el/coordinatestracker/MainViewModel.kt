@@ -30,6 +30,7 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.location.LocationManager
 import android.location.LocationRequest
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.core.content.ContextCompat.getSystemService
@@ -126,12 +127,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-    fun insertTrackAndCoordinates(track:Tracks, tracks: TrackCoordinates)
+    fun insertTrackCoordinates(tracks: TrackCoordinates)
     {
         viewModelScope.launch {
         TracksDatabase.getDao(context).apply {
-            insertTrackAndCoordinates(track,tracks)
 
+            insertTrackCoordinates(tracks)
             //val tracks = getTracks()
             //Log.i("TRACKS", getTracks().joinToString())
         }
@@ -139,28 +140,49 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun insertAll(track: TrackCoordinates,tracks: Tracks)
+    fun insertAll(tracks: Tracks)
     {
         viewModelScope.launch {
             TracksDatabase.getDao(context).apply {
-                insertTrackCoordinates(track)
-                insertTrack(tracks)
-
+                //insertTrackCoordinates(track)
+                var test = insertTrack(tracks)
+                //println(test)
                 //val tracks = getTracks()
                 //Log.i("TRACKS", getTracks().joinToString())
             }
-        }}
+        }
 
+    }
+/*
+    fun insertTrack(tracks: Tracks): Int
+    {
+        var id: Int
+        id = 0
+        viewModelScope.launch {
+            TracksDatabase.getDao(context).apply {
+                //insertTrackCoordinates(track)
+                id = insertTracks(tracks)
+                //println(test)
+                //val tracks = getTracks()
+                //Log.i("TRACKS", getTracks().joinToString())
+            }
+        }
+        return id
+    }
+*/
+
+
+/*
     fun getCoordinates(date: Long)
     {
         viewModelScope.launch {
             TracksDatabase.getDao(context).apply {
                 getTrackWithCoordinates(date.toString())
                 //val tracks = getTracks()
-                //Log.i("TRACKS", getTracks().joinToString())
+                //Log.i("TRACKS")
             }
         }
-    }
+    }*/
     fun loop(received_tracks: MutableList<String>,received_dateStart: MutableList<Long>,received_dateEnd: MutableList<Long>, locStr: String, isTracking: Boolean) {
 
         viewModelScope.launch {

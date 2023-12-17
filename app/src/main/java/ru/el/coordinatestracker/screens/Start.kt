@@ -1,6 +1,5 @@
 package ru.el.coordinatestracker.screens
 
-import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,26 +9,27 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.MainViewModel
-import ru.el.coordinatestracker.db.TracksDatabase
+import ru.el.coordinatestracker.db.entities.Tracks
 //import ru.el.coordinatestracker.MainViewModelFactory
 import ru.el.coordinatestracker.navigation.NavigationPath
-import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
 @Composable
 fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
+
+
+
+    val lastTrackId = viewModel.db.getTracks().collectAsState(listOf()).value.lastIndex
+        //.collectAsState(listOf()).value
 
 
     Column(
@@ -60,9 +60,25 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
         }
         Button(
             onClick = {
-                //viewModel.initDatabase(TYPE_ROOM) {
-                   navController.navigate(route = NavigationPath.Add.route)
-                //}
+                var dateStart = System.currentTimeMillis() / 1000
+                //var lastTrackIdtest = lastTrackId+1
+                //println(lastTrackIdtest)
+                var track = Tracks(dateStart = dateStart, dateEnd = dateStart, distance = 0)
+                viewModel.insertAll(track)
+                //var lastTrackIdtest = lastTrackId+2
+                //println(lastTrackIdtest)
+
+                //var receivedData: MutableList<Int> = mutableListOf()
+                //receivedData
+
+
+                //viewModel.insertTrack(track)
+        //println(viewModel.db.insertTracks(track))
+                //var test = viewModel.insertTrack(track)
+                //println(test)
+                var newTrackId = lastTrackId+2
+                navController.navigate(NavigationPath.Add.route + "/${newTrackId}")
+
             },
             modifier = Modifier
                 .width(250.dp)

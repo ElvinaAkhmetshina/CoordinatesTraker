@@ -96,13 +96,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         //база данных
         //val dao = TracksDatabase.getInstance(this).getDao()
-        val t1 = Tracks(222,222,111)
-        val t2 = TrackCoordinates(222,"111")
+        //val t1 = Tracks(dateStart = 222, dateEnd = 111, distance = 111)
+        //val t2 = TrackCoordinates(trackId = 1, coordinatesX = 1.0, coordinatesY = 1.0, coordinateDate = 1)
 
         lifecycleScope.launch {
             TracksDatabase.getDao(applicationContext).apply {
-                insertTrack(t1)
-                insertTrackCoordinates(t2)
+                //insertTrack(t1)
+                //insertTrackCoordinates(t2)
                val tracks = getTracks()
                 //Log.i("TRACKS", getTracks().joinToString())
             }
@@ -292,10 +292,7 @@ fun MainUI(
     val loc by mvm.location.collectAsState()
     val main_color = Color(0xFF34857D)
     val locStr = loc?.let{ "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
-    /*
-    Text(
-        text = locStr,
-    )*/
+
 
 
     Scaffold(
@@ -322,6 +319,11 @@ fun MainUI(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background
             ) {
+                /*
+                Text(
+                    text = locStr,
+                )*/
+
                 TracksNavigationHost(mvm)
             }
         }

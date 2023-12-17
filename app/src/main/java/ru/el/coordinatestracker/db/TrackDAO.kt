@@ -25,19 +25,24 @@ interface TrackDAO {
     suspend fun insertTrackAndCoordinates(tracks: Tracks, tracksCoordinates: TrackCoordinates)
 
 
-    @Transaction
-    @Query("SELECT coordinates FROM TrackCoordinates WHERE trackDate = :date")
-    suspend fun getTrackWithCoordinates(date: String): List<String>
+
 
     @Query("SELECT * FROM Tracks")
     fun getTracks(): Flow<List<Tracks>>
 
+    @Query("SELECT id FROM Tracks ORDER BY id")
+    fun getTrackId(): List<Int>
 
-    @Query("SELECT coordinates FROM TrackCoordinates WHERE trackDate = :trackDate")
-    fun getTrackCoordinates(trackDate: String): Flow<List<String>>
-/*
-    @Query("SELECT * FROM TrackCoordinates WHERE trackDate = :trackDate")
-    fun getTrackCoordinates(trackDate: String): Flow<List<Tracks>>*/
+    //@Insert
+    //suspend fun insertTracks(tracks: Tracks): Int
+
+
+   // @Query("SELECT * FROM TrackCoordinates WHERE trackId = :id")
+    //fun getTrackCoordinates(id: String): Flow<List<String>>
+
+    /*
+        @Query("SELECT * FROM TrackCoordinates WHERE trackDate = :trackDate")
+        fun getTrackCoordinates(trackDate: String): Flow<List<Tracks>>*/
 
 
 

@@ -32,5 +32,6 @@ object Constants {
         const val MAIN_SCREEN="main_screen"
         const val ADD_SCREEN=("add_screen")
         const val NOTE_SCREEN=("note_screen")
+        const val SAVE_SCREEN=("save_screen")
     }
 }

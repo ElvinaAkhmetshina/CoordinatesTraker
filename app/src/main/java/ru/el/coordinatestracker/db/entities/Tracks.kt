@@ -6,9 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Tracks(
-    @PrimaryKey(autoGenerate = false)
-val date: Long,
-    val dateStop: Long,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int=0,
+
+val dateStart: Long,
+    val dateEnd: Long,
 val distance: Long
 
 

@@ -89,7 +89,7 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
             }
         }
     }
-        /*
+    /*
     //BottomAppBar {
     FloatingActionButton(
         onClick = {
@@ -108,9 +108,8 @@ fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
     //}
 
 
-
-
 }
+
 
 //}
 
@@ -124,7 +123,7 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 24.dp)
             .clickable {
-                navController.navigate(NavigationPath.Track.route + "/${track.date}")
+                navController.navigate(NavigationPath.Track.route + "/${track.id}")
             },
         elevation = 6.dp
     )
@@ -134,14 +133,14 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = track.date.toString(),
+                text = track.dateStart.toString(),
                 //text = "экран со списком треков",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-               text = track.dateStop.toString(),
+               text = track.dateEnd.toString(),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -156,7 +155,8 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
     }
 }
 
-/*
+    /*
+
 @Preview(showBackground = true)
 @Composable
 fun prevListScreen() {
