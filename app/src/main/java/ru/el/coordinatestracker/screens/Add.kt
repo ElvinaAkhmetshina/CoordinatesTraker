@@ -9,6 +9,7 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -46,43 +47,44 @@ import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 
 
 @Composable
-fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
-   // var title by remember{ mutableStateOf("") }
+fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
+    // var title by remember{ mutableStateOf("") }
     //var subtitle by remember{ mutableStateOf("") }
-    var isTracking by remember{mutableStateOf(false)}
-   // var priority by remember{ mutableStateOf("") }
-    var isButtonEnabledStart by remember{ mutableStateOf(true) }
-    var isButtonEnabled by remember{ mutableStateOf(false) }
+    var isTracking by remember { mutableStateOf(false) }
+    // var priority by remember{ mutableStateOf("") }
+    var isButtonEnabledStart by remember { mutableStateOf(true) }
+    var isButtonEnabled by remember { mutableStateOf(false) }
     val loc by viewModel.location.collectAsState()
     val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
     var rt = "ttt"
-
+    var dateStart = System.currentTimeMillis() / 1000
+    var dateEnd = System.currentTimeMillis() / 1000
     var received_tracks: MutableList<String> = mutableListOf()
-    received_tracks.add(locStr)
+    //received_tracks.add(locStr)
+    var received_dateStart: MutableList<Long> = mutableListOf()
+    //received_dateStart.add(dateStart)
+    var received_dateEnd: MutableList<Long> = mutableListOf()
+    //received_dateEnd.add(dateEnd)
 
     //viewModel.insertTrackCoordinates(Tracks(1,2,3),TrackCoordinates(1,1,"11")){}
-
-
 
 
     ////работало
 //viewModel.insertAll(Tracks(1,2,3),TrackCoordinates(1,1,"11"))
 
 
-
     //вроде работало
     //while (received_tracks.last() != locStr)
-      //  received_tracks.add(locStr)
-fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
-    val isTracking = !isTracking
+    //  received_tracks.add(locStr)
+    fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
+        val isTracking = !isTracking
 
-    while (isTracking)
-    {
-        received_tracks.add(locStr)
+        while (isTracking) {
+            received_tracks.add(locStr)
+        }
+        //var received_tracks: MutableList<String> = mutableListOf()
+
     }
-    //var received_tracks: MutableList<String> = mutableListOf()
-
-}
 
 
     Column(
@@ -114,23 +116,27 @@ fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
         }
 
 
-
-
-
         //stop
         Button(
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabledStart,
-            onClick = {isTracking = !isTracking
+            onClick = {//isTracking = !isTracking
+                isTracking = true
+                received_tracks.add(locStr)
+                received_dateStart.add(6)
+                received_dateEnd.add(6)
                 if (isTracking) {
-                    received_tracks.add(locStr)
-                    viewModel.insertAll(Tracks(2,3,3),TrackCoordinates(1,2,"22"))
+
+
+                    //viewModel.loop(received_tracks,received_dateStart, received_dateEnd, locStr, isTracking)
+
+
+                    //loop
                 }
 
 
-
                 //navController.navigate(NavigationPath.Start.route)
-            /*
+                /*
                 viewModel.addNote(
                     note = Track(
 
@@ -151,8 +157,23 @@ fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
         //back
         Button(
 
-            onClick = { //val tracks = receivedTracks.toString()
-                rt = received_tracks.toString() }
+            onClick = {
+                isTracking = false
+                //viewModel.insertTrackAndCoordinates(Tracks(5,5,5), TrackCoordinates(5,"555"))
+                //var i = 0
+                //viewModel.insertTrackAndCoordinates(Tracks(received_dateStart[0],received_dateEnd[0],3), TrackCoordinates(received_dateStart[0],received_tracks[0]))
+                var size = received_dateEnd.size
+                //for (i in 0..1) {
+                  //  var date = received_dateStart[i]
+                    //viewModel.insertTrackAndCoordinates(Tracks(date,date,3), TrackCoordinates(date,received_tracks[i]))
+                    viewModel.insertAll(
+                        TrackCoordinates(received_dateStart[0], received_tracks[0] ),
+                        Tracks(received_dateStart[0], 879, 3)
+
+                    )//val tracks = receivedTracks.toString()
+                //}
+                //navController.navigate(NavigationPath.List.route)
+            }
         )
         {
 
@@ -161,7 +182,7 @@ fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
         }
         Text(text = rt, fontSize = 24.sp)
     }
-
+}
 
 
 
@@ -169,7 +190,7 @@ fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
 
 
 //}
-}
+
 
 /*
 text = DateTimeFormatter

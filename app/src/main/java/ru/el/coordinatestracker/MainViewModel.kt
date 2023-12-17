@@ -35,6 +35,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.utils.REPOSITORY
@@ -125,19 +126,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-    fun insertTrackCoordinates(track:Tracks, tracks: TrackCoordinates, onSuccess: () -> Unit)
+    fun insertTrackAndCoordinates(track:Tracks, tracks: TrackCoordinates)
     {
-        viewModelScope.launch(Dispatchers.IO){
-            REPOSITORY.insert(track = track, tracks = tracks)
+        viewModelScope.launch {
+        TracksDatabase.getDao(context).apply {
+            insertTrackAndCoordinates(track,tracks)
+
+            //val tracks = getTracks()
+            //Log.i("TRACKS", getTracks().joinToString())
         }
     }
 
-    fun insertAll(tracks: Tracks,track: TrackCoordinates)
+    }
+
+    fun insertAll(track: TrackCoordinates,tracks: Tracks)
     {
         viewModelScope.launch {
             TracksDatabase.getDao(context).apply {
-                insertTrack(tracks)
                 insertTrackCoordinates(track)
+                insertTrack(tracks)
+
                 //val tracks = getTracks()
                 //Log.i("TRACKS", getTracks().joinToString())
             }
@@ -151,7 +159,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 //val tracks = getTracks()
                 //Log.i("TRACKS", getTracks().joinToString())
             }
-        }}
+        }
+    }
+    fun loop(received_tracks: MutableList<String>,received_dateStart: MutableList<Long>,received_dateEnd: MutableList<Long>, locStr: String, isTracking: Boolean) {
+
+        viewModelScope.launch {
+            delay(10000)
+            viewModelScope.launch {
+                if (isTracking) {
+                    //var dateStart= System.currentTimeMillis() / 1000
+                    received_dateStart.add(System.currentTimeMillis() / 1000)
+                    received_tracks.add(locStr)
+                    //var dateEnd= System.currentTimeMillis() / 1000
+                    received_dateEnd.add(System.currentTimeMillis())
+                    loop(received_tracks, received_dateStart, received_dateEnd, locStr, isTracking)
+                }
+
+            }
+        }
+
+
+    }
 
 
 

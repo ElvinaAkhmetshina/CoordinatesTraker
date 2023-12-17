@@ -21,7 +21,8 @@ interface TrackDAO {
     suspend fun insertTrackCoordinates(tracksCoordinates: TrackCoordinates)
 
 
-
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrackAndCoordinates(tracks: Tracks, tracksCoordinates: TrackCoordinates)
 
 
     @Transaction
