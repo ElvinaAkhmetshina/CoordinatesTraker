@@ -153,6 +153,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
 
     }
+    fun UpdateDistance(trackId:Int, Distance: Double)
+    {
+        viewModelScope.launch {
+            TracksDatabase.getDao(context).apply {
+                updateDistance(trackId, Distance)
+            }
+        }
+
+    }
 /*
     fun insertTrack(tracks: Tracks): Int
     {

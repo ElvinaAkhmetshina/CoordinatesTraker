@@ -120,10 +120,21 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, trackI
             onClick = {
                 var distance: Double
                 distance = 0.0
-                for (i )
-                println(TrackCoordinates)
 
+                for (i in 0 until TrackCoordinates.size-1) {
 
+                        var newDistance = GetDistance(
+                            TrackCoordinates[i].coordinatesX,
+                            TrackCoordinates[i].coordinatesY,
+                            TrackCoordinates[i + 1].coordinatesX,
+                            TrackCoordinates[i + 1].coordinatesY
+                        )
+                        distance += newDistance
+
+                }
+
+if (trackId !=null){
+viewModel.UpdateDistance(trackId.toInt(),distance)}
                 navController.navigate(NavigationPath.Start.route)
             //isTracking = !isTracking
                 //Start()

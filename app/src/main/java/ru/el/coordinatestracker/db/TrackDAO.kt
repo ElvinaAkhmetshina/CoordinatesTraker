@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
@@ -25,7 +26,8 @@ interface TrackDAO {
     suspend fun insertTrackAndCoordinates(tracks: Tracks, tracksCoordinates: TrackCoordinates)
 
 
-
+    @Query("update Tracks set distance = :Distance where id = :trackId")
+    suspend fun updateDistance(trackId: Int, Distance: Double)
 
     @Query("SELECT * FROM Tracks")
     fun getTracks(): Flow<List<Tracks>>
