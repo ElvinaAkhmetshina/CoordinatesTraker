@@ -140,14 +140,16 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
                 fontWeight = FontWeight.Bold
             )
 
-                /*Text(
-                text = DateTimeFormatter
-                    .ofPattern("yyyy-MM-dd HH:mm")
-                    .withZone( ZoneId.of("Europe/Moscow"))
-                    .format(Instant.ofEpochSecond(track.date)),
+            Text(
+               text = track.dateStop.toString(),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
-            )*/
+            )
+            Text(
+                text = track.distance.toString(),
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold
+            )
 
         }
 

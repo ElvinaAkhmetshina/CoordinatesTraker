@@ -25,11 +25,18 @@ interface TrackDAO {
 
 
     @Transaction
-    @Query("SELECT * FROM Tracks WHERE date = :date")
-    suspend fun getTrackWithCoordinates(date: String): List<TrackWithCoordinates>
+    @Query("SELECT coordinates FROM TrackCoordinates WHERE trackDate = :date")
+    suspend fun getTrackWithCoordinates(date: String): List<String>
 
     @Query("SELECT * FROM Tracks")
     fun getTracks(): Flow<List<Tracks>>
+
+
+    @Query("SELECT coordinates FROM TrackCoordinates WHERE trackDate = :trackDate")
+    fun getTrackCoordinates(trackDate: String): Flow<List<String>>
+/*
+    @Query("SELECT * FROM TrackCoordinates WHERE trackDate = :trackDate")
+    fun getTrackCoordinates(trackDate: String): Flow<List<Tracks>>*/
 
 
 

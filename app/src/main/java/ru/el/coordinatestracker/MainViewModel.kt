@@ -143,6 +143,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }}
 
+    fun getCoordinates(date: Long)
+    {
+        viewModelScope.launch {
+            TracksDatabase.getDao(context).apply {
+                getTrackWithCoordinates(date.toString())
+                //val tracks = getTracks()
+                //Log.i("TRACKS", getTracks().joinToString())
+            }
+        }}
+
 
 
 

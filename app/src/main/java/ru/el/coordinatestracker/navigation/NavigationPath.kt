@@ -26,6 +26,7 @@ fun TracksNavigationHost(mViewModel: MainViewModel) {
         composable(NavigationPath.Start.route) {StartScreen(navController=navController, viewModel = mViewModel)}
         composable(NavigationPath.Add.route) {AddScreen(navController = navController, viewModel = mViewModel) }
         composable(NavigationPath.List.route) {ListScreen(navController = navController, viewModel = mViewModel) }
-        composable(NavigationPath.Track.route ) { TrackScreen(navController = navController, viewModel = mViewModel) }
+        composable(NavigationPath.Track.route + "/{${Constants.Keys.ID}}") {backStackEntry ->  TrackScreen(navController = navController, viewModel = mViewModel, trackId=backStackEntry.arguments?.getString(Constants.Keys.ID)) }
+    //composable(NavigationPath.Track.route ) { TrackScreen(navController = navController, viewModel = mViewModel) }
     }
 }

@@ -1,5 +1,6 @@
 package ru.el.coordinatestracker.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,17 +11,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.db.TracksDatabase
@@ -37,11 +44,12 @@ import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 
 
 
+
 @Composable
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
    // var title by remember{ mutableStateOf("") }
     //var subtitle by remember{ mutableStateOf("") }
-    var isTracking = false
+    var isTracking by remember{mutableStateOf(false)}
    // var priority by remember{ mutableStateOf("") }
     var isButtonEnabledStart by remember{ mutableStateOf(true) }
     var isButtonEnabled by remember{ mutableStateOf(false) }
@@ -53,8 +61,16 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel){
     received_tracks.add(locStr)
 
     //viewModel.insertTrackCoordinates(Tracks(1,2,3),TrackCoordinates(1,1,"11")){}
-viewModel.insertAll(Tracks(1,2,3),TrackCoordinates(1,1,"11"))
-//вроде работало
+
+
+
+
+    ////работало
+//viewModel.insertAll(Tracks(1,2,3),TrackCoordinates(1,1,"11"))
+
+
+
+    //вроде работало
     //while (received_tracks.last() != locStr)
       //  received_tracks.add(locStr)
 fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
@@ -105,8 +121,11 @@ fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
         Button(
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabledStart,
-            onClick = {isTracking=!isTracking
-               StartTracking(received_tracks,isTracking)
+            onClick = {isTracking = !isTracking
+                if (isTracking) {
+                    received_tracks.add(locStr)
+                    viewModel.insertAll(Tracks(2,3,3),TrackCoordinates(1,2,"22"))
+                }
 
 
 
@@ -132,18 +151,34 @@ fun StartTracking(received_tracks: MutableList<String>, isTracking: Boolean) {
         //back
         Button(
 
-            onClick = { rt = received_tracks.toString() }
+            onClick = { //val tracks = receivedTracks.toString()
+                rt = received_tracks.toString() }
         )
         {
 
-            Text(text = Constants.Keys.NAV_BACK, fontSize = 24.sp)
+            Text(text = "save", fontSize = 24.sp)
 
         }
         Text(text = rt, fontSize = 24.sp)
     }
+
+
+
+
+
+
+
 //}
 }
 
+/*
+text = DateTimeFormatter
+.ofPattern("yyyy-MM-dd HH:mm")
+.withZone( ZoneId.of("Europe/Moscow"))
+.format(Instant.ofEpochSecond(track.date)),
+fontSize = 32.sp,
+fontWeight = FontWeight.Bold
+*/
 
 
 

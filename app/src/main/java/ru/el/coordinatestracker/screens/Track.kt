@@ -1,20 +1,14 @@
 package ru.el.coordinatestracker.screens
 
-import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -26,27 +20,34 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.db.entities.Tracks
 //import ru.el.coordinatestracker.MainViewModelFactory
 
 import ru.el.coordinatestracker.navigation.NavigationPath
-import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 import ru.el.coordinatestracker.utils.Constants
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
-    var isButtonEnabledStart by remember{ mutableStateOf(true) }
+fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trackId: String?){
+    val tracks = viewModel.db.getTracks().collectAsState(listOf()).value
+    val track = tracks.firstOrNull { it.date == trackId?.toLong() } ?: Tracks(
+        date = 111,
+        dateStop = 0,
+        distance = 0
+    )
+    val trackCoordinates = viewModel.db.getTrackCoordinates("111").collectAsState(listOf()).value
+
+
+
+
+   /* var isButtonEnabledStart by remember{ mutableStateOf(true) }
     val loc by viewModel.location.collectAsState()
     val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
     var received_tracks: MutableList<String> = mutableListOf()
@@ -86,7 +87,7 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
     }
 ///add to database!!!!
 
-
+*/
 
 
 
@@ -97,13 +98,13 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
        // distance = 0
     //)
     //val track = "track"
-    //val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    //val coroutineScope = rememberCoroutineScope()
-    //var title by remember { mutableStateOf(Constants.Keys.EMPTY) }
+    val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val coroutineScope = rememberCoroutineScope()
+    var date by remember { mutableStateOf(Constants.Keys.EMPTY) }
     //var subtitle by remember { mutableStateOf(Constants.Keys.EMPTY) }
     //var priority by remember { mutableStateOf("") }
-/*
 
+/*
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetElevation = 5.dp,
@@ -122,7 +123,7 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                     OutlinedTextField(
-                        value = title,
+                        value = date,
                         onValueChange = {title = it},
                         label = { Text(text="Введите заголовок заметки") },
                         isError = title.isEmpty()
@@ -174,7 +175,7 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
             }
 
         }
-    ) {
+    )*/
         //Scaffold(
         //  modifier = Modifier.fillMaxSize()
 
@@ -191,15 +192,37 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
 
             )
             {
-                if (track != null) {
+               // if (track != null) {
                     Text(
-                        //text = track.title,
-                        text = "экран одного трека",
+                        text = track.date.toString(),
+                        //text = "экран одного трека",
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 32.dp)
                     )
-                }
+                Text(
+                    text = track.dateStop.toString(),
+                    //text = "экран одного трека",
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 32.dp)
+                )
+                Text(
+                    text = track.distance.toString(),
+                    //text = "экран одного трека",
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 32.dp)
+                )
+                for(index in trackCoordinates){
+                Text(
+                    text = index,
+                    //text = "экран одного трека",
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 32.dp)
+                )}
+                //}
                 /*
                 if (note != null) {
                     Text(
@@ -263,8 +286,8 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel){
         }
         //}
     }
-*/
-}
+
+
 
 
 /*
