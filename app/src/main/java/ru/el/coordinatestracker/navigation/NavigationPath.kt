@@ -11,6 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.screens.ListScreen
 import ru.el.coordinatestracker.screens.SaveScreen
+import ru.el.coordinatestracker.screens.TrackScreen
+
 //import ru.el.coordinatestracker.screens.TrackScreen
 
 //import ru.el.coordinatestracker.screens.TrackScreen
@@ -34,7 +36,7 @@ fun TracksNavigationHost(mViewModel: MainViewModel) {
         composable(NavigationPath.Save.route) {SaveScreen(navController = navController, viewModel = mViewModel) }
         composable(NavigationPath.Add.route + "/{${Constants.Keys.ID}}") {backStackEntry ->  AddScreen(
             navController = navController, viewModel = mViewModel, trackId =backStackEntry.arguments?.getString(Constants.Keys.ID)) }
-    //composable(NavigationPath.Track.route + "/{${Constants.Keys.ID}}") {backStackEntry ->  TrackScreen(
-      //  navController = navController, viewModel = mViewModel, trackId = backStackEntry.arguments?.getString(Constants.Keys.ID)) }
+        composable(NavigationPath.Track.route + "/{${Constants.Keys.ID}}") {backStackEntry ->  TrackScreen(
+        navController = navController, viewModel = mViewModel, trackId = backStackEntry.arguments?.getString(Constants.Keys.ID)) }
     }
 }

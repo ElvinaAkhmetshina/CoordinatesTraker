@@ -39,8 +39,8 @@ interface TrackDAO {
     //suspend fun insertTracks(tracks: Tracks): Int
 
 
-   // @Query("SELECT * FROM TrackCoordinates WHERE trackId = :id")
-    //fun getTrackCoordinates(id: String): Flow<List<String>>
+    @Query("SELECT * FROM TrackCoordinates WHERE trackId = :id")
+    fun getTrackCoordinates(id: String): Flow<List<TrackCoordinates>>
 
     /*
         @Query("SELECT * FROM TrackCoordinates WHERE trackDate = :trackDate")

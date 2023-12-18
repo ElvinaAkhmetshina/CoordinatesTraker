@@ -27,22 +27,28 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.MainViewModel
+import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
 //import ru.el.coordinatestracker.MainViewModelFactory
 
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.utils.Constants
-/*
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trackId: String?){
     val tracks = viewModel.db.getTracks().collectAsState(listOf()).value
+
     val track = tracks.firstOrNull { it.id == trackId?.toInt() } ?: Tracks(
-        dateStart = 111,
+        dateStart = 0,
         dateEnd = 0,
-        distance = 0
+        distance = 0,
     )
-    val trackCoordinates = viewModel.db.getTrackCoordinates("1").collectAsState(listOf()).value
+    val tI= track.id
+    val trackCoordinates = viewModel.db.getTrackCoordinates(tI.toString()).collectAsState(listOf()).value
 
 
 
@@ -194,14 +200,20 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
             {
                // if (track != null) {
                     Text(
-                        text = track.dateStart.toString(),
+                        text = DateTimeFormatter
+                            .ofPattern("yyyy-MM-dd HH:mm")
+                            .withZone( ZoneId.of("Europe/Moscow"))
+                            .format(Instant.ofEpochSecond(track.dateStart)),
                         //text = "экран одного трека",
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 32.dp)
                     )
                 Text(
-                    text = track.dateEnd.toString(),
+                    text = DateTimeFormatter
+                        .ofPattern("yyyy-MM-dd HH:mm")
+                        .withZone( ZoneId.of("Europe/Moscow"))
+                        .format(Instant.ofEpochSecond(track.dateEnd)),
                     //text = "экран одного трека",
                     fontSize = 40.sp,
                     fontWeight = FontWeight.Bold,
@@ -214,14 +226,23 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 32.dp)
                 )
-                for(index in trackCoordinates){
+                for(trackC in trackCoordinates){
                 Text(
-                    text = index,
+                    text = trackC.coordinatesX.toString(),
                     //text = "экран одного трека",
                     fontSize = 40.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 32.dp)
-                )}
+                )
+                    Text(
+                        text = trackC.coordinatesY.toString(),
+                        //text = "экран одного трека",
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 32.dp)
+                    )
+                }
+
                 //}
                 /*
                 if (note != null) {

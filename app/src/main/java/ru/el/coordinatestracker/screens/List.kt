@@ -39,6 +39,9 @@ import ru.el.coordinatestracker.db.TrackViewModel
 import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 
 @Composable
@@ -133,14 +136,21 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = track.dateStart.toString(),
+                text = DateTimeFormatter
+                    .ofPattern("yyyy-MM-dd HH:mm")
+                    .withZone( ZoneId.of("Europe/Moscow"))
+                    .format(Instant.ofEpochSecond(track.dateStart)),
+
                 //text = "экран со списком треков",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-               text = track.dateEnd.toString(),
+               text = DateTimeFormatter
+                   .ofPattern("yyyy-MM-dd HH:mm")
+                   .withZone( ZoneId.of("Europe/Moscow"))
+                   .format(Instant.ofEpochSecond(track.dateEnd)),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
