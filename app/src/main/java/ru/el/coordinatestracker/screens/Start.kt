@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.FakeViewModel
@@ -104,11 +105,9 @@ fun prevStartScreen() {
 
         val context = LocalContext.current
 
-
         val fakeViewModel = FakeViewModel(application = Application()) // Используем NoteViewModelInterface
-
-
 
         StartScreen(navController = rememberNavController(), viewModel = fakeViewModel)
     }
+
 }

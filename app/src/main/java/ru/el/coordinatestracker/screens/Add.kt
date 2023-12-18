@@ -19,11 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.el.coordinatestracker.FakeViewModel
 import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
+import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
@@ -138,9 +140,11 @@ fun GetDistance(locationAX: Double,locationAY: Double, locationBX: Double, locat
 @Preview(showBackground = true)
 fun prevAddScreen() {
     CoordinatesTrackerTheme {
+
         val context =  LocalContext.current
         val fakeViewModel = FakeViewModel(application = Application())
-        AddScreen(navController = rememberNavController(), viewModel = fakeViewModel, trackId = "1")
+        val viewModel = MainViewModel(Application())
+        AddScreen(navController = rememberNavController(), viewModel = viewModel, trackId = "1")
     }
 
 }

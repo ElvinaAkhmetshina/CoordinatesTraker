@@ -264,7 +264,7 @@ fun MainUI(
     modifier: Modifier = Modifier,
 ){
     val loc by mvm.location.collectAsState()
-    val main_color = Color(0xFF34857D)
+    val main_color = Color(0xFF3789CA)
     val locStr = loc?.let{ "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
 
 
@@ -381,10 +381,24 @@ fun LocationRequestDialog(
 @Preview
 @Composable
 fun LocationRequestDialogPreview(){
-    LocationRequestDialog(onDeny = { /*TODO*/ }) {
+    LocationRequestDialog(onDeny = {  }) {
 
     }
 }
+
+/*
+@Preview
+@Composable
+fun MainUIPreview(){
+    CoordinatesTrackerTheme {
+        MainUI(
+            mvm = MainViewModel(Application())
+            //Modifier.fillMaxSize(),
+            //title = "Заголовок активности",
+            //viewMode = ViewMode.NOTE,
+        )
+    }
+}*/
 
 
 

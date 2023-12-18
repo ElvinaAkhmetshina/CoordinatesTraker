@@ -172,6 +172,9 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
         }
 
     }
+
+    open fun readAllTracks() = db.getTracks()
+    open fun readAllCoord() = db.getTrackCoordinates("1")
 /*
     fun insertTrack(tracks: Tracks): Int
     {
