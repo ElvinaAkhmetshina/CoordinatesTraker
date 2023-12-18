@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -96,6 +97,56 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
 
 }
 
+@Composable
+fun PrScren()
+{
+    Column(
+    modifier = Modifier.fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center
+) {
+    Button(
+        onClick = {
+
+
+
+        },
+        modifier = Modifier
+            .width(250.dp)
+            .height(100.dp)
+            .padding(vertical = 8.dp)
+    )
+    {
+        Text(
+            text = "Просмотреть сохраненные треки",
+            fontFamily = FontFamily.Cursive,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp
+        )
+    }
+    Button(
+        onClick = {
+
+
+        },
+        modifier = Modifier
+            .width(250.dp)
+            .height(100.dp)
+            .padding(vertical = 8.dp)
+    )
+    {
+        Text(
+            text = "Начать запись нового трека",
+            fontFamily = FontFamily.Cursive,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp
+        )
+    }
+
+
+}}
 
 
 @Preview(showBackground = true)
@@ -103,11 +154,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
 fun prevStartScreen() {
     CoordinatesTrackerTheme {
 
-        val context = LocalContext.current
-
-        val fakeViewModel = FakeViewModel(application = Application()) // Используем NoteViewModelInterface
-
-        StartScreen(navController = rememberNavController(), viewModel = fakeViewModel)
+       PrScren()
     }
 
 }

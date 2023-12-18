@@ -71,10 +71,10 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, trackI
         )
 
 
-        Column(Modifier.selectableGroup())
-        {
+        //Column(Modifier.selectableGroup())
+        //{
 
-        }
+        //}
 
 
 
@@ -140,13 +140,55 @@ fun GetDistance(locationAX: Double,locationAY: Double, locationBX: Double, locat
 @Preview(showBackground = true)
 fun prevAddScreen() {
     CoordinatesTrackerTheme {
-
-        val context =  LocalContext.current
-        val fakeViewModel = FakeViewModel(application = Application())
-        val viewModel = MainViewModel(Application())
-        AddScreen(navController = rememberNavController(), viewModel = viewModel, trackId = "1")
+PrAdd()
+        //val context =  LocalContext.current
+        //val fakeViewModel = FakeViewModel(application = Application())
+        //val viewModel = MainViewModel(Application())
+        //AddScreen(navController = rememberNavController(), viewModel = viewModel, trackId = "1")
     }
 
+}
+
+
+@Composable
+fun PrAdd()
+{
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    )
+    {
+
+        Text(
+            text = "Идет сбор координат!",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+
+
+
+
+
+        Button(
+            modifier = Modifier.padding(top = 16.dp),
+
+            onClick = {
+
+
+
+
+            }
+
+        )
+        {
+            Text(text = "Остановить запись", fontSize = 24.sp)
+        }
+
+
+
+    }
 }
 
 

@@ -151,16 +151,100 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
 @Preview(showBackground = true)
 fun prevTrackScreen() {
     CoordinatesTrackerTheme {
-        val context = LocalContext.current
-        val fakeViewModel = FakeViewModel(application = Application())
-        TrackScreen(
-            navController = rememberNavController(),
-            viewModel = fakeViewModel,
-            trackId = "1"
-        )
+        TrPr()
+        //val context = LocalContext.current
+        //val fakeViewModel = FakeViewModel(application = Application())
+        //TrackScreen(
+          //  navController = rememberNavController(),
+            //viewModel = fakeViewModel,
+            //trackId = "1"
+        //)
     }
 }
 
+
+
+@Composable
+fun TrPr()
+{Card(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(32.dp)
+) {
+    Column(
+        modifier = Modifier.padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    )
+    {
+        Text(
+            text = "Дата начала трекинга:",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "start",
+
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 32.dp)
+        )
+        Text(
+            text = "Дата окончания трекинга:",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "end",
+
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 32.dp)
+        )
+        Text(
+            text = "Пройденное расстояние:",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "distance",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 32.dp)
+        )
+        Text(
+            text = "Список координат X и Y:",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+            Text(
+                text = "|X: |"+"  |Y: | ",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 32.dp)
+            )
+
+
+
+
+    }
+
+}
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 32.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+
+        Button(onClick = {  }) {
+
+            Text(text = Constants.Keys.NAV_BACK, fontSize = 18.sp)
+
+        }
+    }}
 /*
 @Preview(showBackground = true)
 @Composable

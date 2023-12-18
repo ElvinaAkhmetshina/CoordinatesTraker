@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationResult
@@ -57,6 +58,7 @@ import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.navigation.TracksNavigationHost
+import ru.el.coordinatestracker.screens.StartScreen
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
 
@@ -385,6 +387,9 @@ fun LocationRequestDialogPreview(){
 
     }
 }
+
+
+
 
 /*
 @Preview

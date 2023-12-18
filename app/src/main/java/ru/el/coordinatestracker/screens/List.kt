@@ -152,15 +152,69 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
 @Composable
 fun Previews() {
     CoordinatesTrackerTheme {
-        val context = LocalContext.current
-        val fakeViewModel = FakeViewModel(application = Application()) // Используем NoteViewModelInterface
+        PrList()
+        //val context = LocalContext.current
+        //val fakeViewModel = FakeViewModel(application = Application()) // Используем NoteViewModelInterface
 
-        ListScreen(navController = rememberNavController(), viewModel = fakeViewModel)
+        //ListScreen(navController = rememberNavController(), viewModel = fakeViewModel)
     }
 }
 
+@Composable
+fun PrList()
+{
+    Card(
+
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 24.dp)
+            .clickable {
+            },
+        elevation = 6.dp
+    )
+    {
+        Column(
+            modifier = Modifier.padding(vertical = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Дата начала трекинга:",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Start",
 
 
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Дата окончания трекинга:",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "End",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Пройденное расстояние:",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                text = "Distance",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+        }
+
+    }
+}
     /*
 
 @Preview(showBackground = true)
