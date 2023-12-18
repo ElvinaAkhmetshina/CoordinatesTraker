@@ -1,5 +1,6 @@
 package ru.el.coordinatestracker.screens
 
+import android.app.Application
 import android.location.Location
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,13 +14,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import ru.el.coordinatestracker.FakeViewModel
 import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.navigation.NavigationPath
+import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 
 //import ru.el.coordinatestracker.MainViewModelFactory
 
@@ -218,7 +224,16 @@ text = DateTimeFormatter
 fontSize = 32.sp,
 fontWeight = FontWeight.Bold
 */
+@Composable
+@Preview(showBackground = true)
+fun prevAddScreen() {
+    CoordinatesTrackerTheme {
+        val context =  LocalContext.current
+        val fakeViewModel = FakeViewModel(application = Application())
+        AddScreen(navController = rememberNavController(), viewModel = fakeViewModel, trackId = "1")
+    }
 
+}
 
 
 /*

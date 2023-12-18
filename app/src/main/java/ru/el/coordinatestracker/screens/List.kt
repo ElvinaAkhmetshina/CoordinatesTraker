@@ -1,6 +1,8 @@
 package ru.el.coordinatestracker.screens
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import ru.el.coordinatestracker.FakeViewModel
 import ru.el.coordinatestracker.MainViewModel
 //import ru.el.coordinatestracker.MainViewModelFactory
 import ru.el.coordinatestracker.db.TrackDAO
@@ -164,7 +167,17 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
 
     }
 }
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
+@Composable
+fun Previews() {
+    CoordinatesTrackerTheme {
+        val context = LocalContext.current
+        val fakeViewModel = FakeViewModel(application = Application()) // Используем NoteViewModelInterface
 
+        ListScreen(navController = rememberNavController(), viewModel = fakeViewModel)
+    }
+}
     /*
 
 @Preview(showBackground = true)

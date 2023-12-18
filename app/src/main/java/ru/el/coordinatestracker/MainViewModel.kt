@@ -42,7 +42,7 @@ import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.utils.REPOSITORY
 import java.lang.IllegalArgumentException
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+open class MainViewModel(application: Application) : AndroidViewModel(application) {
     //worked!!!!
     val context = application
 

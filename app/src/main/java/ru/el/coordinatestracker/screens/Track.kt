@@ -1,5 +1,6 @@
 package ru.el.coordinatestracker.screens
 
+import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,18 +21,23 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import ru.el.coordinatestracker.FakeViewModel
 import ru.el.coordinatestracker.MainViewModel
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
 //import ru.el.coordinatestracker.MainViewModelFactory
 
 import ru.el.coordinatestracker.navigation.NavigationPath
+import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
 import ru.el.coordinatestracker.utils.Constants
 import java.time.Instant
 import java.time.ZoneId
@@ -309,7 +315,19 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
     }
 
 
-
+@Composable
+@Preview(showBackground = true)
+fun prevNoteScreen() {
+    CoordinatesTrackerTheme {
+        val context = LocalContext.current
+        val fakeViewModel = FakeViewModel(application = Application())
+        TrackScreen(
+            navController = rememberNavController(),
+            viewModel = fakeViewModel,
+            trackId = "1"
+        )
+    }
+}
 
 /*
 @Preview(showBackground = true)
