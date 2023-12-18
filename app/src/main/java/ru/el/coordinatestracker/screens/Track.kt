@@ -1,5 +1,6 @@
 package ru.el.coordinatestracker.screens
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,7 +44,8 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalMaterialApi::class)
+
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trackId: String?){
     val tracks = viewModel.db.getTracks().collectAsState(listOf()).value
@@ -56,143 +58,6 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
     val tI= track.id
     val trackCoordinates = viewModel.db.getTrackCoordinates(tI.toString()).collectAsState(listOf()).value
 
-
-
-
-   /* var isButtonEnabledStart by remember{ mutableStateOf(true) }
-    val loc by viewModel.location.collectAsState()
-    val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
-    var received_tracks: MutableList<String> = mutableListOf()
-    received_tracks.add(locStr)
-    while (received_tracks.last() != locStr)
-        received_tracks.add(locStr)
-    //viewModel.StartNewTracking(viewModel = viewModel, isTracking = true, received_tracks = received_tracks)
-
-
-  Text(text = locStr)
-    println(received_tracks.toString())
-    Button(
-        modifier = Modifier.padding(top = 16.dp),
-        enabled = isButtonEnabledStart,
-        onClick = {//isTracking=false
-            //rt = received_tracks.toString()
-
-            println(received_tracks.toString())
-            navController.navigate(NavigationPath.Start.route)
-            /*
-                viewModel.addNote(
-                    note = Track(
-
-                        title = title,
-                        subtitle = subtitle,
-                        date = System.currentTimeMillis()/1000,
-                        priority = priority.toInt()
-                    )
-                ) {
-                    navController.navigate(NavigationPath.List.route)
-                }*/
-        }
-
-    )
-    {
-        Text(text = "Остановить сбор координат", fontSize = 24.sp)
-    }
-///add to database!!!!
-
-*/
-
-
-
-
-    //val tracks = viewModel.readAll().collectAsState(listOf()).value
-    //val track = tracks.firstOrNull { it.date == date?.toLong() } ?: Tracks(
-      // date = 0,
-       // distance = 0
-    //)
-    //val track = "track"
-    val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val coroutineScope = rememberCoroutineScope()
-    var date by remember { mutableStateOf(Constants.Keys.EMPTY) }
-    //var subtitle by remember { mutableStateOf(Constants.Keys.EMPTY) }
-    //var priority by remember { mutableStateOf("") }
-
-/*
-    ModalBottomSheetLayout(
-        sheetState = bottomSheetState,
-        sheetElevation = 5.dp,
-        sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-        sheetContent = {
-            Surface{
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxSize()
-                        .padding(all = 10.dp)
-                ){
-                    Text(text = Constants.Keys.EDIT_NOTE,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                    OutlinedTextField(
-                        value = date,
-                        onValueChange = {title = it},
-                        label = { Text(text="Введите заголовок заметки") },
-                        isError = title.isEmpty()
-                    )
-                    OutlinedTextField(
-                        value = subtitle,
-                        onValueChange = {subtitle = it},
-                        label = { Text(text="Введите текст заметки") },
-                        isError = subtitle.isEmpty()
-                    )
-
-                    /*Column(Modifier.selectableGroup())
-                    {
-                        Row{
-                            RadioButton(
-                                selected = priority == "1",
-                                onClick = { priority = "1" },
-                                modifier = Modifier.padding(2.dp)
-                            )
-                            Text("Приоритет: обычный", fontSize = 16.sp)
-                        }
-                        Row{
-                            RadioButton(
-                                selected = priority == "2",
-                                onClick = { priority = "2" },
-                                modifier = Modifier.padding(2.dp)
-                            )
-                            Text("Приоритет: высокий", fontSize = 16.sp)
-                        }
-                    }*/
-
-
-
-                    Button(
-                        modifier = Modifier.padding(top = 2.dp), onClick =
-                        {/*
-                            viewModel.updateNote(
-                                note =
-                                Track(id = note.id, title = title, subtitle = subtitle, date = note.date, priority = priority.toInt())
-                            )*/
-                            { navController.navigate(NavigationPath.List.route) }
-                        }
-                    )
-                    {
-                        Text(text = Constants.Keys.UPDATE_NOTE, fontSize = 24.sp)
-
-                    }
-                }
-            }
-
-        }
-    )*/
-        //Scaffold(
-        //  modifier = Modifier.fillMaxSize()
-
-        // )
-        // {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -204,72 +69,63 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
 
             )
             {
-               // if (track != null) {
+                Text(
+                    text = "Дата начала трекинга:",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
                     Text(
                         text = DateTimeFormatter
                             .ofPattern("yyyy-MM-dd HH:mm")
                             .withZone( ZoneId.of("Europe/Moscow"))
                             .format(Instant.ofEpochSecond(track.dateStart)),
-                        //text = "экран одного трека",
-                        fontSize = 40.sp,
+
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 32.dp)
                     )
+                Text(
+                    text = "Дата окончания трекинга:",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
                 Text(
                     text = DateTimeFormatter
                         .ofPattern("yyyy-MM-dd HH:mm")
                         .withZone( ZoneId.of("Europe/Moscow"))
                         .format(Instant.ofEpochSecond(track.dateEnd)),
-                    //text = "экран одного трека",
-                    fontSize = 40.sp,
+
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 32.dp)
+                )
+                Text(
+                    text = "Пройденное расстояние:",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = track.distance.toString(),
-                    //text = "экран одного трека",
-                    fontSize = 40.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 32.dp)
+                )
+                Text(
+                    text = "Список координат X и Y:",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
                 for(trackC in trackCoordinates){
                 Text(
-                    text = trackC.coordinatesX.toString(),
-                    //text = "экран одного трека",
-                    fontSize = 40.sp,
+                    text = "|X: |"+trackC.coordinatesX.toString()+"  |Y: | "+trackC.coordinatesY.toString(),
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 32.dp)
                 )
-                    Text(
-                        text = trackC.coordinatesY.toString(),
-                        //text = "экран одного трека",
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 32.dp)
-                    )
+
                 }
 
-                //}
-                /*
-                if (note != null) {
-                    Text(
-                        text = note.subtitle,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Light,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                }
-                if (note != null) {
-                    Text(
-                        text = DateTimeFormatter
-                            .ofPattern("yyyy-MM-dd HH:mm")
-                            .withZone( ZoneId.of("Europe/Moscow"))
-                            .format(Instant.ofEpochSecond(note.date)),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Light,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                }*/
+
             }
 
         }
@@ -280,44 +136,20 @@ fun TrackScreen(navController: NavHostController, viewModel: MainViewModel, trac
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Button(onClick = { coroutineScope.launch {
-                /*
-                if (note != null) {
-                    title = note.title
-                }
-                if (note != null) {
-                    subtitle = note.subtitle
-                }
-                if (note != null) {
-                    priority = note.priority.toString()
-                }*/
-                bottomSheetState.show()
-            } }) {
-                Text(text = Constants.Keys.UPDATE, fontSize = 18.sp)
 
-            }
-
-            Button(onClick = {
-                /*
-                if (track != null) {
-                    viewModel.deleteNote(track = track){navController.navigate(NavigationPath.List.route)}
-                }*/
-            }) {
-                Text(text = Constants.Keys.DELETE, fontSize = 18.sp)
-            }
             Button(onClick = { navController.navigate(NavigationPath.List.route) }) {
 
                 Text(text = Constants.Keys.NAV_BACK, fontSize = 18.sp)
 
             }
         }
-        //}
+
     }
 
 
 @Composable
 @Preview(showBackground = true)
-fun prevNoteScreen() {
+fun prevTrackScreen() {
     CoordinatesTrackerTheme {
         val context = LocalContext.current
         val fakeViewModel = FakeViewModel(application = Application())

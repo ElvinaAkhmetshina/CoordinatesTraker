@@ -8,7 +8,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
-import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
+//import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
 
 
@@ -28,6 +28,9 @@ interface TrackDAO {
 
     @Query("update Tracks set distance = :Distance where id = :trackId")
     suspend fun updateDistance(trackId: Int, Distance: Double)
+
+    @Query("update Tracks set dateEnd = :dateEnd where id = :trackId")
+    suspend fun updateDateEnd(trackId: Int, dateEnd: Long)
 
     @Query("SELECT * FROM Tracks")
     fun getTracks(): Flow<List<Tracks>>

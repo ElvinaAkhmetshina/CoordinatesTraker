@@ -8,11 +8,11 @@ import ru.el.coordinatestracker.db.entities.Tracks
 
 class FakeViewModel(application: Application) : MainViewModel(application) {
 
-    private val fakeNoteList = MutableLiveData<List<Tracks>>()
+    private val fakeTrackList = MutableLiveData<List<Tracks>>()
 
     init {
         // Статические данные
-        fakeNoteList.value = listOf(
+        fakeTrackList.value = listOf(
             Tracks(dateStart = 1, dateEnd = 2, distance = 3),
             Tracks(dateStart = 2, dateEnd = 3, distance = 4)
 
@@ -32,5 +32,5 @@ class FakeViewModel(application: Application) : MainViewModel(application) {
 //    override fun deleteNote(note: Note, onSuccess: () -> Unit) {
 //    }
 
-    fun readAllTracks() = fakeNoteList
+    fun readAllTracks() = fakeTrackList
 }

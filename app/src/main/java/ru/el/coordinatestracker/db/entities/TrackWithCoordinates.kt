@@ -1,5 +1,5 @@
 package ru.el.coordinatestracker.db.entities
-
+/*
 import androidx.room.Embedded
 import androidx.room.Relation
 
@@ -13,4 +13,4 @@ data class TrackWithCoordinates (
 
 
 
-)
+)*/

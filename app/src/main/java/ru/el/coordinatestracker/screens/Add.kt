@@ -38,14 +38,7 @@ import ru.el.coordinatestracker.utils.Constants.Keys.ADD_NOTE
 var TrackCoordinates: MutableList<TrackCoordinates> = mutableListOf()
 @Composable
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel, trackId: String?) {
-    //println(trackId)
-    // var title by remember{ mutableStateOf("") }
-    //var subtitle by remember{ mutableStateOf("") }
-    //var isTracking = true
-    // var priority by remember{ mutableStateOf("") }
-    //var isButtonEnabledStart by remember { mutableStateOf(true) }
-    //var isButtonEnabled by remember { mutableStateOf(false) }
-    //println(trackId)
+
     var dateStart = System.currentTimeMillis() / 1000
     val loc by viewModel.location.collectAsState()
     val locX = loc?.longitude
@@ -60,35 +53,6 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, trackI
     }
 
 
-    //val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
-
-    //var received_tracks: MutableList<String> = mutableListOf()
-    //viewModel.insertAll(Tracks(received_dateStart[0], received_dateEnd[0], 3))
-    //viewModel.insertTrackCoordinates(TrackCoordinates(received_dateStart[0], received_tracks[0]))
-    //received_tracks.add(locStr)
-    //println(received_tracks)
-    //println("test")
-    var rt = "ttt"
-
-    /*var dateEnd = System.currentTimeMillis() / 1000
-    var received_tracks: MutableList<String> = mutableListOf()
-    //received_tracks.add(locStr)
-    var received_dateStart: MutableList<Long> = mutableListOf()
-    //received_dateStart.add(dateStart)
-    var received_dateEnd: MutableList<Long> = mutableListOf()
-    //received_dateEnd.add(dateEnd)
-
-
-    viewModel.loop(received_tracks,received_dateStart,received_dateEnd, locStr, isTracking)*/
-
-    ////работало
-//viewModel.insertAll(Tracks(1,2,3),TrackCoordinates(1,1,"11"))
-
-
-    //viewModel.insertTrackCoordinates(TrackCoordinates(dateStart, locStr))
-
-
-
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -98,20 +62,12 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, trackI
     {
 
         Text(
-            text = ADD_NOTE,
+            text = "Идет сбор координат!",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = 8.dp)
-        )/*
-        OutlinedTextField(value = title, onValueChange = {
-            title = it
-            isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
-        }, label = { Text(text = "Введите заголовок заметки") }, isError = title.isEmpty())
-        OutlinedTextField(value = subtitle, onValueChange = {
-            subtitle = it
-            isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
-        }, label = { Text(text = "Введите текст заметки") }, isError = subtitle.isEmpty())
-*/
+        )
+
 
         Column(Modifier.selectableGroup())
         {
@@ -138,39 +94,14 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, trackI
                         distance += newDistance
 
                 }
-
-if (trackId !=null){
-viewModel.UpdateDistance(trackId.toInt(),distance)}
+                var dateEnd = System.currentTimeMillis() / 1000
+    if (trackId !=null){
+viewModel.UpdateDistance(trackId.toInt(),distance)
+        viewModel.UpdateDateEnd(trackId.toInt(),dateEnd)
+        }
                 navController.navigate(NavigationPath.Start.route)
-            //isTracking = !isTracking
-                //Start()
-                //println(received_tracks)
-                //received_tracks.add(locStr)
-                //received_dateStart.add(6)
-                //received_dateEnd.add(6)
-                //if (isTracking) {
 
 
-                    //viewModel.loop(received_tracks,received_dateStart, received_dateEnd, locStr, isTracking)
-
-
-                    //loop
-                //}
-
-
-                //navController.navigate(NavigationPath.Start.route)
-                /*
-                viewModel.addNote(
-                    note = Track(
-
-                        title = title,
-                        subtitle = subtitle,
-                        date = System.currentTimeMillis()/1000,
-                        priority = priority.toInt()
-                    )
-                ) {
-                    navController.navigate(NavigationPath.List.route)
-                }*/
             }
 
         )
@@ -179,23 +110,12 @@ viewModel.UpdateDistance(trackId.toInt(),distance)}
         }
 
 
-        //Text(text = rt, fontSize = 24.sp)
+
     }
 }
 
 
 
-@Composable
-fun Start(viewModel: MainViewModel)
-{
-    val loc by viewModel.location.collectAsState()
-    val locStr = loc?.let { "Lat: ${it.latitude} Lon: ${it.longitude}" } ?: "Unknown location"
-}
-
-fun Stop()
-{
-    println("Start")
-}
 
 
 fun GetDistance(locationAX: Double,locationAY: Double, locationBX: Double, locationBY: Double): Double
@@ -213,17 +133,7 @@ fun GetDistance(locationAX: Double,locationAY: Double, locationBX: Double, locat
 }
 
 
-//}
 
-
-/*
-text = DateTimeFormatter
-.ofPattern("yyyy-MM-dd HH:mm")
-.withZone( ZoneId.of("Europe/Moscow"))
-.format(Instant.ofEpochSecond(track.date)),
-fontSize = 32.sp,
-fontWeight = FontWeight.Bold
-*/
 @Composable
 @Preview(showBackground = true)
 fun prevAddScreen() {

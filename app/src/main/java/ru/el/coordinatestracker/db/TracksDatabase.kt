@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
-import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
+//import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
 
 import ru.el.coordinatestracker.utils.Constants.Keys.NOTE_DATABASE

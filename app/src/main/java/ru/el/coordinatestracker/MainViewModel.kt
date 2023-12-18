@@ -98,7 +98,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
             acc && context.checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED
         }
 
-
+/*
     @Composable
     fun StartTracking(viewModel: MainViewModel, isTracking: Boolean, received_tracks: MutableList<String>): MutableList<String> {
         val loc by viewModel.location.collectAsState()
@@ -111,11 +111,11 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
         }
 
        return received_tracks
-    }
+    }*/
 
 
 
-
+/*
     fun insertTrack(note: Tracks, onSuccess: () -> Unit)
     {
         viewModelScope.launch(Dispatchers.IO){
@@ -126,7 +126,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }
         }
-    }
+    }*/
     fun insertTrackCoordinates(tracks: TrackCoordinates)
     {
         viewModelScope.launch {
@@ -162,6 +162,16 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
         }
 
     }
+
+    fun UpdateDateEnd(trackId:Int, dateEnd: Long)
+    {
+        viewModelScope.launch {
+            TracksDatabase.getDao(context).apply {
+                updateDateEnd(trackId, dateEnd)
+            }
+        }
+
+    }
 /*
     fun insertTrack(tracks: Tracks): Int
     {
@@ -192,6 +202,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }*/
+    /*
     fun loop(received_tracks: MutableList<String>,received_dateStart: MutableList<Long>,received_dateEnd: MutableList<Long>, locStr: String, isTracking: Boolean) {
 
         viewModelScope.launch {
@@ -207,7 +218,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
                 }
 
             }
-        }
+        }*/
 
 
     }
@@ -377,7 +388,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
                 statisticRepository.insertNewStatisticData(newStatistic.toStatisticDbEntity())
             }
         }*/
-}
+
 
 
 

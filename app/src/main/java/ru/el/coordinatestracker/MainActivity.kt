@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
 import ru.el.coordinatestracker.db.TrackRepository
 import ru.el.coordinatestracker.db.TracksDatabase
 import ru.el.coordinatestracker.db.entities.TrackCoordinates
-import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
+//import ru.el.coordinatestracker.db.entities.TrackWithCoordinates
 import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.navigation.TracksNavigationHost
@@ -65,9 +65,6 @@ class MainActivity : ComponentActivity() {
 
 
 
-
-
-    //код маклецова с лекции
     private val mvm: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
@@ -94,10 +91,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //база данных
-        //val dao = TracksDatabase.getInstance(this).getDao()
-        //val t1 = Tracks(dateStart = 222, dateEnd = 111, distance = 111)
-        //val t2 = TrackCoordinates(trackId = 1, coordinatesX = 1.0, coordinatesY = 1.0, coordinateDate = 1)
+
 
         lifecycleScope.launch {
             TracksDatabase.getDao(applicationContext).apply {
@@ -149,16 +143,6 @@ class MainActivity : ComponentActivity() {
         mvm.stopLocationUpdates()
     }
 
-    fun insertAll(tracks: Tracks)
-    {
-        lifecycleScope.launch {
-            TracksDatabase.getDao(applicationContext).apply {
-                insertTrack(tracks)
-                //insertTrackCoordinates(t2)
-                //val tracks = getTracks()
-                //Log.i("TRACKS", getTracks().joinToString())
-            }
-        }}
 
 
 
@@ -170,8 +154,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-    //
-    ///private val trackDatabase by lazy { TracksDatabase.getInstance(this).TrackDAO() }
+
 //my working code
     /*
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
@@ -274,15 +257,6 @@ fun DefaultPreview() {
 
 
 
-
-
-
-
-
-
-
-
-//код маклецова с лекции
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainUI(
@@ -319,10 +293,7 @@ fun MainUI(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background
             ) {
-                /*
-                Text(
-                    text = locStr,
-                )*/
+
 
                 TracksNavigationHost(mvm)
             }
@@ -340,10 +311,10 @@ fun LocationRequestDialog(
     AlertDialog(
 
         title = {
-            Text(text = "Внимание! Запрос на сбор данных")
+            Text(text = "Внимание!")
         },
         text = {
-            Text(text = "Даете ли вы свое согласие на сбор данных о вашем местоположении?")
+            Text(text = "Данное приложение хочет собирать ваши координаты, вы доверяте ему или просто так сюда зашли?")
         },
         onDismissRequest = {
                            onDeny()
@@ -366,7 +337,7 @@ fun LocationRequestDialog(
                     /*onDismissRequest()*/
                 }
             ) {
-                Text("Отказываюсь")
+                Text("Отказываюсь и ухожу")
             }
         }
     )
@@ -418,57 +389,3 @@ fun LocationRequestDialogPreview(){
 
 
 
-
-/* override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val dao = SchoolDatabase.getInstance(this).schoolDao
-
-        val directors = listOf(
-            Director("Mike Litoris", "Jake Wharton School"),
-            Director("Jack Goff", "Kotlin School"),
-            Director("Chris P. Chicken", "JetBrains School")
-        )
-        val schools = listOf(
-            School("Jake Wharton School"),
-            School("Kotlin School"),
-            School("JetBrains School")
-        )
-        val subjects = listOf(
-            Subject("Dating for programmers"),
-            Subject("Avoiding depression"),
-            Subject("Bug Fix Meditation"),
-            Subject("Logcat for Newbies"),
-            Subject("How to use Google")
-        )
-        val students = listOf(
-            Student("Beff Jezos", 2, "Kotlin School"),
-            Student("Mark Suckerberg", 5, "Jake Wharton School"),
-            Student("Gill Bates", 8, "Kotlin School"),
-            Student("Donny Jepp", 1, "Kotlin School"),
-            Student("Hom Tanks", 2, "JetBrains School")
-        )
-        val studentSubjectRelations = listOf(
-            StudentSubjectCrossRef("Beff Jezos", "Dating for programmers"),
-            StudentSubjectCrossRef("Beff Jezos", "Avoiding depression"),
-            StudentSubjectCrossRef("Beff Jezos", "Bug Fix Meditation"),
-            StudentSubjectCrossRef("Beff Jezos", "Logcat for Newbies"),
-            StudentSubjectCrossRef("Mark Suckerberg", "Dating for programmers"),
-            StudentSubjectCrossRef("Gill Bates", "How to use Google"),
-            StudentSubjectCrossRef("Donny Jepp", "Logcat for Newbies"),
-            StudentSubjectCrossRef("Hom Tanks", "Avoiding depression"),
-            StudentSubjectCrossRef("Hom Tanks", "Dating for programmers")
-        )
-        lifecycleScope.launch {
-            directors.forEach { dao.insertDirector(it) }
-            schools.forEach { dao.insertSchool(it) }
-            subjects.forEach { dao.insertSubject(it) }
-            students.forEach { dao.insertStudent(it) }
-            studentSubjectRelations.forEach { dao.insertStudentSubjectCrossRef(it) }
-
-            val schoolWithDirector = dao.getSchoolAndDirectorWithSchoolName("Kotlin School")
-
-            val schoolWithStudents = dao.getSchoolWithStudents("Kotlin School")
-        }
-    }
-* */

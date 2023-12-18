@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -42,6 +43,7 @@ import ru.el.coordinatestracker.db.TrackViewModel
 import ru.el.coordinatestracker.db.entities.Tracks
 import ru.el.coordinatestracker.navigation.NavigationPath
 import ru.el.coordinatestracker.ui.theme.CoordinatesTrackerTheme
+import ru.el.coordinatestracker.utils.Constants
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -50,74 +52,37 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun ListScreen(navController: NavHostController, viewModel: MainViewModel) {
 
-    //var tracks = viewModel.readTracks().collectAsState(listOf()).value
-    /*var sort by remember{ mutableStateOf(SORT_BY_PRIORITY) }
-    var notes =
-        viewModel.readAllNotes().observeAsState(listOf()).value.sortedByDescending { it.priority }
 
-    if (sort == SORT_BY_DATE) {
-        notes =
-            viewModel.readAllNotes().observeAsState(listOf()).value.sortedByDescending { it.date }
-    }*/
-    //var tracks = listOf(1)
-    //val tracks
 
     val tracks = viewModel.db.getTracks().collectAsState(listOf()).value
-
+    val sortedTracks = tracks.sortedByDescending { it.dateStart }
     Column(Modifier.selectableGroup())
     {
-        Text(
-            text = "экран с треками",
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold
-        )
+        Button(onClick = { navController.navigate(NavigationPath.Start.route) }) {
 
+            Text(text = Constants.Keys.NAV_BACK, fontSize = 18.sp)
 
-        /*Row {
-            RadioButton(
-                selected = sort == SORT_BY_DATE,
-                onClick = { sort = SORT_BY_DATE },
-                modifier = Modifier.padding(8.dp)
-            )
-            Text("Сортировка по времени", fontSize = 20.sp)
         }
-        Row {
-            RadioButton(
-                selected = sort == SORT_BY_PRIORITY,
-                onClick = { sort = SORT_BY_PRIORITY },
-                modifier = Modifier.padding(8.dp)
-            )
-            Text("Сортировка по важности", fontSize = 20.sp)
-        }*/
+
+        LazyColumn {
+            items(sortedTracks) { track ->
+                TrackItem(track = track, navController = navController)
+            }
+        }
+/*worked
         LazyColumn {
             items(tracks) { track ->
                 TrackItem(track = track, navController = navController)
             }
-        }
+        }*/
     }
-    /*
-    //BottomAppBar {
-    FloatingActionButton(
-        onClick = {
-            navController.navigate(NavigationPath.Add.route)
-        },
-        //Modifier.size(100.dp)
-        modifier = Modifier.offset(x = 320.dp, y = 16.dp)
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Add,
-            contentDescription = ADD_NOTE,
-            tint = Color.White
-        )
-    }*/
 
-    //}
 
 
 }
 
 
-//}
+
 
 
 @Composable
@@ -139,27 +104,42 @@ fun TrackItem(track: Tracks, navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
+                text = "Дата начала трекинга:",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
                 text = DateTimeFormatter
                     .ofPattern("yyyy-MM-dd HH:mm")
                     .withZone( ZoneId.of("Europe/Moscow"))
                     .format(Instant.ofEpochSecond(track.dateStart)),
 
-                //text = "экран со списком треков",
-                fontSize = 32.sp,
+
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
-
+            Text(
+                text = "Дата окончания трекинга:",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
             Text(
                text = DateTimeFormatter
                    .ofPattern("yyyy-MM-dd HH:mm")
                    .withZone( ZoneId.of("Europe/Moscow"))
                    .format(Instant.ofEpochSecond(track.dateEnd)),
-                fontSize = 32.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
+                text = "Пройденное расстояние:",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
                 text = track.distance.toString(),
-                fontSize = 32.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -178,6 +158,9 @@ fun Previews() {
         ListScreen(navController = rememberNavController(), viewModel = fakeViewModel)
     }
 }
+
+
+
     /*
 
 @Preview(showBackground = true)
